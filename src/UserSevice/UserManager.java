@@ -11,6 +11,7 @@ public class UserManager {
 
 	public UserManager(DataStorge dataStorge) {
 		this.dataStorge = dataStorge;
+		this.listAccount = dataStorge.getListAccount();
 	}
 
 	public ArrayList<User> findFriendByName(String keyword) {
@@ -26,7 +27,7 @@ public class UserManager {
 
 	public boolean addNewAccount(String lastName, String firstName, String password, String gender, String dateOfBirth,
 			String userName) {
-		if (checkUsername(userName) > -1) {
+		if (checkUsername(userName) != -1) {
 			return false;
 		}
 		User user = new User(lastName, firstName, doMD5(password), gender, dateOfBirth, userName);
