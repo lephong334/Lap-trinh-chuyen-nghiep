@@ -54,14 +54,14 @@ public class DataStorge {
 		return -1;
 	}
 
-	public boolean InviteUserByUsername(String usrname, int groupID) {
-		User invitingUsser = checkAccountWithoutPassword(usrname);
-		if (invitingUsser != null) {
-			return listPublicGroup.get(groupID).inviteByMember(invitingUsser);
-		}
-		return false;
-
-	}
+//	public boolean InviteUserByUsername(String usrname, int groupID) {
+//		User invitingUsser = checkAccountWithoutPassword(usrname);
+//		if (invitingUsser != null) {
+//			return listPublicGroup.get(groupID).inviteByMember(invitingUsser);
+//		}
+//		return false;
+//
+//	}
 	/////// Public group : end
 
 	/// Account : head

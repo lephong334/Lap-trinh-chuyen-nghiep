@@ -59,16 +59,16 @@ public class Menu {
 
 	}
 
-	public boolean inviteUserByUsername(String usename) {
-
-		if (isLogin() && isInGroup() && dateStorage.InviteUserByUsername(usename, groupID)) {
-
-			return true;
-
-		}
-		return false;
-
-	}
+//	public boolean inviteUserByUsername(String usename) {
+//
+//		if (isLogin() && isInGroup() && dateStorage.InviteUserByUsername(usename, groupID)) {
+//
+//			return true;
+//
+//		}
+//		return false;
+//
+//	}
 
 	public String generateCodeForPublicGroup() {
 		if (groupID != -1) {
