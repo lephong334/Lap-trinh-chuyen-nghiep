@@ -6,8 +6,8 @@ import java.util.Random;
 
 class Group {
 	private String id;
-	private String groupName;
-	private User groupOwner;
+	private String name;
+	private User owner;
 	private List<String> listOfMessages;
 	private List<Media> listOfMedias;
 	protected List<User> listOfUsers;
@@ -24,20 +24,20 @@ class Group {
 		this.id = id;
 	}
 
-	public String getGroupName() {
-		return groupName;
+	public String getName() {
+		return name;
 	}
 
-	public void setGroupName(String groupName) {
-		this.groupName = groupName;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public User getGroupOwner() {
-		return groupOwner;
+	public User getOwner() {
+		return owner;
 	}
 
-	public void setGroupOwner(User groupOwner) {
-		this.groupOwner = groupOwner;
+	public void setOwner(User owner) {
+		this.owner = owner;
 	}
 
 	public List<String> getListOfMessages() {
