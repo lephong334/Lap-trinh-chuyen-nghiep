@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DataStorge {
+	
+
 	private String pathStr;
 	private String fileName;
 	protected ArrayList<User> listAccount;
@@ -60,13 +62,24 @@ public class DataStorge {
 			return listPublicGroup.get(groupID).inviteByMember(invitingUsser);
 		}
 		return false;
+<<<<<<< Updated upstream
 
 	}
 	/////// Public group : end
+=======
+>>>>>>> Stashed changes
 
-	/// Account : head
+	}
+	/////// Public group : end
+//getter and setter for AccountList : head
+	public ArrayList<User> getListAccount() {
+		return listAccount;
+	}
 
-	//// Account :end
+	public void setListAccount(ArrayList<User> listAccount) {
+		this.listAccount = listAccount;
+	}
+	//getter and setter for AccountList : end
 
 	/// store : head
 
