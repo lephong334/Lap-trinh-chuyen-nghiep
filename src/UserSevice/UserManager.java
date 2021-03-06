@@ -23,5 +23,4 @@ public class UserManager {
 		return dataStorge.findFriendByName(keyword);
 
 	}
-
 }
