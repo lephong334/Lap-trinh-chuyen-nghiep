@@ -30,6 +30,7 @@ public class Menu {
 		return false;
 
 	}
+
 	public User login(String username, String password) {
 		User result = mngUser.checkAccount(username, password);
 		if (result != null) {

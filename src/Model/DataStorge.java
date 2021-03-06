@@ -71,7 +71,7 @@ public class DataStorge {
 	/// store : head
 
 	public DataStorge readListAccountasByte() {
-
+		return null;
 	}
 
 	public void saveDatapasByte() {

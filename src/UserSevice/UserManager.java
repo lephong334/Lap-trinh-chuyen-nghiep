@@ -34,8 +34,6 @@ public class UserManager {
 		return true;
 	}
 
-	
-
 	public User checkAccount(String username, String password) {
 		int id = checkUsername(username);
 		if (id > -1) {
