@@ -11,85 +11,89 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DataStorge {
-	
 
-	private String pathStr;
-	private String fileName;
-	protected ArrayList<User> listAccount;
-	protected ArrayList<PublicGroup> listPublicGroup;
+	protected List<User> listAccount;
+	protected List<Group> listGroup;
 
-	public DataStorge(String pathStr, String fileName) {
-		this.pathStr = pathStr;
-		this.fileName = fileName;
-		createFolder();
+	public DataStorge() {
 		listAccount = new ArrayList<>();
-		listPublicGroup = new ArrayList<PublicGroup>();
+		listGroup = new ArrayList<Group>();
 	}
 
-	public void createFolder() {
-		File folder = new File(pathStr);
-		if (folder.exists()) {
-			System.out.println("Folder exist");
-		} else {
-			System.out.println("Folder created");
-		}
-	}
-
-///////Public group : head
-
-	public int createNewPublicGroup(List<User> listOfUsers) {
-		PublicGroup temporary = new PublicGroup(listOfUsers);
-		listPublicGroup.add(temporary);
-		return listPublicGroup.size() - 1;
-	}
-
-	public String generateCode(int groupID) {
-		return listPublicGroup.get(groupID).createJoinCode();
-	}
-
-	public int joinPublicGroupByCode(String code, User user) {
-		for (int i = 0; i < listPublicGroup.size(); i++) {
-			if (listPublicGroup.get(i).joinByCode(user, code)) {
-				return i;
+	/// Group: head
+	public boolean checkNameOfGroup(String name) {
+		for (int i = 0; i < listGroup.size(); i++) {
+			if (listGroup.get(i).getName().equalsIgnoreCase(name)) {
+				return false;
 			}
 		}
-		return -1;
+		return true;
 	}
 
-	public boolean InviteUserByUsername(String usrname, int groupID) {
-		User invitingUsser = checkAccountWithoutPassword(usrname);
-		if (invitingUsser != null) {
-			return listPublicGroup.get(groupID).inviteByMember(invitingUsser);
-		}
-		return false;
-<<<<<<< Updated upstream
-
+	public void storeGroup(Group group) {
+		this.listGroup.add(group);
 	}
+///////Public group : head
+
+//	public int createNewPublicGroup(List<User> listOfUsers) {
+//		PublicGroup temporary = new PublicGroup(listOfUsers);
+//		listPublicGroup.add(temporary);
+//		return listPublicGroup.size() - 1;
+//	}
+//
+//	public String generateCode(int groupID) {
+//		return listPublicGroup.get(groupID).createJoinCode();
+//	}
+//
+//	public int joinPublicGroupByCode(String code, User user) {
+//		for (int i = 0; i < listPublicGroup.size(); i++) {
+//			if (listPublicGroup.get(i).joinByCode(user, code)) {
+//				return i;
+//			}
+//		}
+//		return -1;
+//	}
+//
+//	public boolean InviteUserByUsername(String usrname, int groupID) {
+//		User invitingUsser = checkAccountWithoutPassword(usrname);
+//		if (invitingUsser != null) {
+//			return listPublicGroup.get(groupID).inviteByMember(invitingUsser);
+//		}
+//		return false;
+//
+//	}
 	/////// Public group : end
-=======
->>>>>>> Stashed changes
 
-	}
 	/////// Public group : end
 //getter and setter for AccountList : head
-	public ArrayList<User> getListAccount() {
+	public List<User> getListAccount() {
 		return listAccount;
 	}
 
 	public void setListAccount(ArrayList<User> listAccount) {
 		this.listAccount = listAccount;
 	}
-	//getter and setter for AccountList : end
+	// getter and setter for AccountList : end
 
 	/// store : head
 
 	public DataStorge readListAccountasByte() {
+		return null;
 
 	}
 
-	public void saveDatapasByte() {
+	public boolean saveDatapasByte() {
+		return true;
 
 	}
 	/// store : end
+
+	public List<Group> getListGroup() {
+		return listGroup;
+	}
+
+	public void setListGroup(List<Group> listGroup) {
+		this.listGroup = listGroup;
+	}
 
 }

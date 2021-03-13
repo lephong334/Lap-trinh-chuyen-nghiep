@@ -1,25 +1,29 @@
 package UserSevice;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import Model.DataStorge;
 import Model.User;
 
 public class UserManager {
 	DataStorge dataStorge;
-	protected ArrayList<User> listAccount;
+	protected List<User> listAccount;
 
 	public UserManager(DataStorge dataStorge) {
 		this.dataStorge = dataStorge;
 		this.listAccount = dataStorge.getListAccount();
 	}
 
-	public ArrayList<User> findFriendByName(String keyword) {
-		ArrayList<User> result = null;
+	public List<User> findFriendByName(String keyword) {
+		List<User> result = new ArrayList<User>();
 		for (int i = 0; i < listAccount.size(); i++) {
 			if (listAccount.get(i).getFullName().contains(keyword)) {
-				result.add(listAccount.get(i));
+			result.add(listAccount.get(i));
 			}
+		}
+		if (result.size()<1) {
+			result= null;
 		}
 		return result;
 
@@ -34,8 +38,6 @@ public class UserManager {
 		this.listAccount.add(user);
 		return true;
 	}
-
-	
 
 	public User checkAccount(String username, String password) {
 		int id = checkUsername(username);
