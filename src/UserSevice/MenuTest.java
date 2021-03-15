@@ -58,21 +58,83 @@ class MenuTest {
 	}
 
 	@Test
-	void createGroup00() {
+	void createPublicGroup00() {
 		menu.addAccount("lastname", "first", "123", "no", "2021", "banana");
 		menu.login("banana", "123");
-		boolean result = menu.createGroup("banana");
+		boolean result = menu.createPublicGroup("banana");
 		assertTrue(result);
-		
+
 	}
+
 	@Test
 	void createGroup01() {
 		menu.addAccount("lastname", "first", "123", "no", "2021", "banana");
 		menu.login("banana", "123");
-		menu.createGroup("banana");
-		boolean result = menu.createGroup("banana");
+		menu.createPublicGroup("banana");
+		boolean result = menu.createPublicGroup("banana");
 		assertFalse(result);
-		
+
+	}
+
+	@Test
+	void createPrivateGroup00() {
+		menu.addAccount("lastname", "first", "123", "no", "2021", "banana");
+		menu.login("banana", "123");
+		boolean result = menu.createPrivateGroup("banana");
+		assertTrue(result);
+
+	}
+
+	@Test
+	void createPrivateGroup01() {
+		menu.addAccount("lastname", "first", "123", "no", "2021", "banana");
+		menu.login("banana", "123");
+		menu.createPrivateGroup("banana");
+		boolean result = menu.createPrivateGroup("banana");
+		assertFalse(result);
+
+	}
+
+	@Test
+	void invitePublicGroup() {
+		menu.addAccount("lastname", "first", "123", "no", "2021", "banana");
+		menu.addAccount("lastname", "first", "123", "no", "2021", "nonono");
+		menu.login("banana", "123");
+		menu.createPublicGroup("NoOne");
+		menu.inviteUserPublicGroup("nonono", "NoOne");
+		menu.logout();
+		menu.login("nonono", "123");
+		String result = menu.getManagermentGroup().getListPublicGroup().get(0).getListOfUsers().get(1).getUserName();
+		assertEquals("nonono", result);
+
+	}
+
+	@Test
+	void generateAndJoinByCodeInPublicGroup() {
+		menu.addAccount("lastname", "first", "123", "no", "2021", "banana");
+		menu.addAccount("lastname", "first", "123", "no", "2021", "nonono");
+		menu.login("banana", "123");
+		menu.createPublicGroup("NoOne");
+		String code = menu.generateCodeForPublicGroup("NoOne");
+		menu.logout();
+		menu.login("nonono", "123");
+		menu.joinPublicGroupByCode(code, "NoOne");
+		String result = menu.getManagermentGroup().getListPublicGroup().get(0).getListOfUsers().get(1).getUserName();
+		assertEquals("nonono", result);
+	}
+
+	@Test
+	void invitePrivateGroup() {
+		menu.addAccount("lastname", "first", "123", "no", "2021", "banana");
+		menu.addAccount("lastname", "first", "123", "no", "2021", "nonono");
+		menu.login("banana", "123");
+		menu.createPrivateGroup("NoOne");
+		menu.inviteUserPrivateGroup("nonono", "NoOne");
+		menu.logout();
+		menu.login("nonono", "123");
+		String result = menu.getManagermentGroup().getListPrivateGroup().get(0).getListOfUsers().get(1).getUserName();
+		assertEquals("nonono", result);
+
 	}
 
 }

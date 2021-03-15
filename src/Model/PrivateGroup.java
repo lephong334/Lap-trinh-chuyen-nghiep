@@ -4,16 +4,13 @@ import java.util.List;
 
 public class PrivateGroup extends Group {
 
-	public PrivateGroup(DataStorge dataStorge) {
-		super(dataStorge);
-		// TODO Auto-generated constructor stub
-	}
-
-	public boolean inviteUser(User user) {
-		if (user != null) {
+	public boolean inviteUser(User user, User member) {
+		if (user != null && listOfUsers.get(0).getId().endsWith(member.getId())) {
+			
 			this.listOfUsers.add(user);
 			return true;
 		}
+		
 		return false;
 	}
 }

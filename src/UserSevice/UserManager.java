@@ -19,22 +19,22 @@ public class UserManager {
 		List<User> result = new ArrayList<User>();
 		for (int i = 0; i < listAccount.size(); i++) {
 			if (listAccount.get(i).getFullName().contains(keyword)) {
-			result.add(listAccount.get(i));
+				result.add(listAccount.get(i));
 			}
 		}
-		if (result.size()<1) {
-			result= null;
+		if (result.size() < 1) {
+			result = null;
 		}
 		return result;
 
 	}
 
-	public boolean addNewAccount(String lastName, String firstName, String password, String gender, String dateOfBirth,
-			String userName) {
+	public boolean addNewAccount(String id, String lastName, String firstName, String password, String gender,
+			String dateOfBirth, String userName) {
 		if (checkUsername(userName) != -1) {
 			return false;
 		}
-		User user = new User(lastName, firstName, doMD5(password), gender, dateOfBirth, userName);
+		User user = new User(id, lastName, firstName, doMD5(password), gender, dateOfBirth, userName);
 		this.listAccount.add(user);
 		return true;
 	}
@@ -50,7 +50,7 @@ public class UserManager {
 		return null;
 	}
 
-	private User checkAccountWithoutPassword(String username) {
+	public User checkAccountWithoutPassword(String username) {
 		int id = checkUsername(username);
 		if (id > -1) {
 			return listAccount.get(id);
@@ -79,5 +79,13 @@ public class UserManager {
 			}
 		}
 		return -1;
+	}
+
+	public List<User> getListAccount() {
+		return listAccount;
+	}
+
+	public void setListAccount(List<User> listAccount) {
+		this.listAccount = listAccount;
 	}
 }
