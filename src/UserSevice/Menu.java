@@ -142,6 +142,15 @@ public class Menu {
 		String out = this.user.showAllTheMessageUser(username);
 		return out;
 	}
+	
+	public boolean deleteMessage(String username, int idMessage) {
+		User receiver = managementUser.checkAccountWithoutPassword(username);
+		if (isLogin() && this.user.deleteMessageSenderInUser(username, idMessage)) {
+			receiver.deleteMessageReceiverInUser(this.user.getUserName(), idMessage);
+			return true;
+		}
+		return false;
+	}
 
 	public User getUser() {
 		return this.user;

@@ -160,5 +160,19 @@ class MenuTest {
 		assertEquals("banana: the winter is comming\n" + 
 				"nonono: The summer has begun!\n", result);
 	}
+	@Test
+	void deleteMessageUser() {
+		menu.addAccount("lastname", "first", "123", "no", "2021", "banana");
+		menu.addAccount("lastname", "first", "123", "no", "2021", "nonono");
+		menu.login("banana", "123");
+		menu.sendMessageToUser("nonono", "the winter is comming");
+		menu.deleteMessage("nonono", 0);
+		menu.logout();
+		menu.login("nonono", "123");
+		menu.sendMessageToUser("banana", "The summer has begun!");
+		String result = menu.showAllMessageUser("banana");
+		assertEquals("This message has been deleted\n" + 
+				"nonono: The summer has begun!\n", result);
+	}
 
 }

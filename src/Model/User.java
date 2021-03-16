@@ -63,6 +63,30 @@ public class User {
 
 	}
 
+	public boolean deleteMessageSenderInUser(String username, int idMessage) {
+		if (checkContainTheIdMessageUser(username, idMessage)) {
+			listMessageUser.get(username).set(idMessage, "This message has been deleted");
+			return true;
+
+		}
+		return false;
+	}
+
+	public void deleteMessageReceiverInUser(String username, int idMessage) {
+		listMessageUser.get(username).set(idMessage, "This message has been deleted");
+	}
+
+	private boolean checkContainTheIdMessageUser(String username, int idMessage) {
+		List<Integer> temporary = listMessageHasSentToUser.get(username);
+		for (int i = 0; i < temporary.size(); i++) {
+			if (temporary.get(i) == idMessage) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	public String showAllTheMessageUser(String username) {
 		List<String> temporary = listMessageUser.get(username);
 		if (temporary != null) {
