@@ -17,7 +17,6 @@ public class User {
 	private HashMap<String, Integer> listPublicGroup;
 	private HashMap<String, Integer> listPrivateGroup;
 	private HashMap<String, List<String>> listMessageUser;
-	private HashMap<String, List<String>> listMessageGroup;
 	private HashMap<String, List<Integer>> listMessageHasSentToUser;
 	private HashMap<String, List<Integer>> listMessageHasSentToGroup;
 
@@ -34,12 +33,45 @@ public class User {
 		this.listPublicGroup = new HashMap<>();
 		this.listPrivateGroup = new HashMap<>();
 		this.listMessageUser = new HashMap<>();
-		this.listMessageGroup = new HashMap<>();
+
 		this.listMessageHasSentToUser = new HashMap<>();
 		this.listMessageHasSentToGroup = new HashMap<>();
 	}
 
-	public void sentMessagetoUser(String username, String message) {
+	// message
+	public boolean sentMessageToGroup(String clubname, String message, int idMessage) {
+		if (listPublicGroup.get(clubname) != null || listPrivateGroup.get(clubname) != null) {
+			if (listMessageHasSentToGroup.get(clubname) == null) {
+				listMessageHasSentToGroup.put(clubname, new ArrayList<Integer>());
+				listMessageHasSentToGroup.get(clubname).add(idMessage);
+			} else {
+				listMessageHasSentToGroup.get(clubname).add(idMessage);
+			}
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean showAllMessageGroup(String clubname) {
+		if (listPublicGroup.get(clubname) != null || listPrivateGroup.get(clubname) != null) {
+			return true;
+		}
+		return false;
+	}
+
+	public boolean deleteMessageGroup(String clubname, int id) {
+		if (listPublicGroup.get(clubname) != null || listPrivateGroup.get(clubname) != null) {
+			List<Integer> temporary = listMessageHasSentToGroup.get(clubname);
+			if (temporary.contains(id)) {
+				return true;
+			}
+
+		}
+		return false;
+	}
+
+	public void sentMessageToUser(String username, String message) {
 		if (listMessageUser.get(username) == null) {
 			listMessageUser.put(username, new ArrayList<String>());
 			listMessageHasSentToUser.put(username, new ArrayList<Integer>());
@@ -98,6 +130,7 @@ public class User {
 		}
 		return null;
 	}
+	// group
 
 	public void storePublicGroup(PublicGroup group, int id) {
 

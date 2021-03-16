@@ -14,8 +14,30 @@ public class Group {
 
 	public void createGroup(String name, User user) {
 		this.listOfUsers = new ArrayList<User>();
+		this.listOfMessages = new ArrayList<String>();
 		this.name = name;
 		this.listOfUsers.add(user);
+	}
+
+	public int receiveMessageGroup(String message, User user) {
+		listOfMessages.add(user.getUserName()+": "+message);
+		return listOfMessages.size() - 1;
+	}
+
+	public String showAllMessageGroup() {
+		String out = "";
+		for (int i = 0; i < listOfMessages.size(); i++) {
+			out += listOfMessages.get(i) + "\n";
+		}
+		return out;
+	}
+
+	public boolean deleteMessageGroup(int idMessage) {
+		if (idMessage < listOfMessages.size()) {
+			listOfMessages.set(idMessage, "This message has been deleted");
+			return true;
+		}
+		return false;
 	}
 
 	public String getName() {

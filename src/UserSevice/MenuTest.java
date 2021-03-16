@@ -157,22 +157,63 @@ class MenuTest {
 		menu.login("nonono", "123");
 		menu.sendMessageToUser("banana", "The summer has begun!");
 		String result = menu.showAllMessageUser("banana");
-		assertEquals("banana: the winter is comming\n" + 
-				"nonono: The summer has begun!\n", result);
+		assertEquals("banana: the winter is comming\n" + "nonono: The summer has begun!\n", result);
 	}
+
 	@Test
 	void deleteMessageUser() {
 		menu.addAccount("lastname", "first", "123", "no", "2021", "banana");
 		menu.addAccount("lastname", "first", "123", "no", "2021", "nonono");
 		menu.login("banana", "123");
 		menu.sendMessageToUser("nonono", "the winter is comming");
-		menu.deleteMessage("nonono", 0);
+		boolean resulDeleteMessage = menu.deleteMessage("nonono", 0);
 		menu.logout();
 		menu.login("nonono", "123");
 		menu.sendMessageToUser("banana", "The summer has begun!");
-		String result = menu.showAllMessageUser("banana");
-		assertEquals("This message has been deleted\n" + 
-				"nonono: The summer has begun!\n", result);
+		String resultShowMessage = menu.showAllMessageUser("banana");
+		assertTrue(resulDeleteMessage);
+		assertEquals("This message has been deleted\n" + "nonono: The summer has begun!\n", resultShowMessage);
+	}
+
+	@Test
+	void sendMessageGroup() {
+		menu.addAccount("lastname", "first", "123", "no", "2021", "banana");
+		menu.login("banana", "123");
+		menu.createPublicGroup("NoOne");
+		boolean result = menu.sendMessageToGroup("NoOne", "The winter is comming");
+		assertTrue(result);
+	}
+
+	@Test
+	void showMessageGroup() {
+		menu.addAccount("lastname", "first", "123", "no", "2021", "banana");
+		menu.addAccount("lastname", "first", "123", "no", "2021", "nonono");
+		menu.login("banana", "123");
+		menu.createPublicGroup("NoOne");
+		menu.sendMessageToGroup("NoOne", "The winter is comming");
+		menu.inviteUserPublicGroup("nonono", "NoOne");
+		menu.logout();
+		menu.login("nonono", "123");
+		menu.sendMessageToGroup("NoOne", "The summer has begin!");
+		String result = menu.showAllMessageGroup("NoOne");
+		assertEquals("banana: The winter is comming\n" + "nonono: The summer has begin!\n", result);
+	}
+
+	@Test
+	void deleteMessageGroup() {
+		menu.addAccount("lastname", "first", "123", "no", "2021", "banana");
+		menu.addAccount("lastname", "first", "123", "no", "2021", "nonono");
+		menu.login("banana", "123");
+		menu.createPublicGroup("NoOne");
+		menu.sendMessageToGroup("NoOne", "The winter is comming");
+		boolean resulDeleteMessage =menu.deleteMessageGroup("NoOne", 0);
+		menu.inviteUserPublicGroup("nonono", "NoOne");
+		menu.logout();
+		menu.login("nonono", "123");
+		menu.sendMessageToGroup("NoOne", "The summer has begin!");
+		String resultShowMessage = menu.showAllMessageGroup("NoOne");
+		assertTrue(resulDeleteMessage);
+		assertEquals("This message has been deleted\n" + "nonono: The summer has begin!\n", resultShowMessage);
 	}
 
 }

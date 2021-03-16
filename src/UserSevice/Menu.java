@@ -126,23 +126,74 @@ public class Menu {
 		}
 		return false;
 	}
+
 //Send message
+	public boolean sendMessageToGroup(String clubname, String message) {
+		int id = managermentGroup.getPublicGroupIdByGroupName(clubname);
+		int idMessage;
+		if (isLogin() == false) {
+			return false;
+		}
+		if (id == -1) {
+			id = managermentGroup.getprivateGroupIdByGroupName(clubname);
+			if (id != -1) {
+				idMessage = managermentGroup.getListPrivateGroup().get(id).receiveMessageGroup(message,this.user);
+				this.user.sentMessageToGroup(clubname, message, idMessage);
+				return true;
+			}
+		} else {
+			idMessage = managermentGroup.getListPublicGroup().get(id).receiveMessageGroup(message,this.user);
+			this.user.sentMessageToGroup(clubname, message, idMessage);
+			return true;
+		}
+		return false;
+	}
+
+	public String showAllMessageGroup(String clubname) {
+		String out = null;
+		if (isLogin() && this.user.showAllMessageGroup(clubname)) {
+			int id = managermentGroup.getPublicGroupIdByGroupName(clubname);
+			if (id == -1) {
+				id = managermentGroup.getprivateGroupIdByGroupName(clubname);
+				out = managermentGroup.getListPrivateGroup().get(id).showAllMessageGroup();
+			} else {
+				out = managermentGroup.getListPublicGroup().get(id).showAllMessageGroup();
+			}
+			return out;
+		}
+		return out;
+	}
+	public boolean deleteMessageGroup(String clubname, int idMessage) {
+		String out = null;
+		if (isLogin() && this.user.deleteMessageGroup(clubname, idMessage)) {
+			int id = managermentGroup.getPublicGroupIdByGroupName(clubname);
+			if (id == -1) {
+				id = managermentGroup.getprivateGroupIdByGroupName(clubname);
+				return managermentGroup.getListPrivateGroup().get(id).deleteMessageGroup(idMessage);
+			} else {
+				return managermentGroup.getListPublicGroup().get(id).deleteMessageGroup(idMessage);
+			}
+			
+		}
+		return false;
+	}
+
 	public boolean sendMessageToUser(String username, String message) {
 		User receiver = managementUser.checkAccountWithoutPassword(username);
 		if (isLogin()) {
-			this.user.sentMessagetoUser(username, message);
+			this.user.sentMessageToUser(username, message);
 			receiver.receiveMessagetoUser(this.user.getUserName(), message);
 			return true;
 		}
 
 		return false;
 	}
-	
+
 	public String showAllMessageUser(String username) {
 		String out = this.user.showAllTheMessageUser(username);
 		return out;
 	}
-	
+
 	public boolean deleteMessage(String username, int idMessage) {
 		User receiver = managementUser.checkAccountWithoutPassword(username);
 		if (isLogin() && this.user.deleteMessageSenderInUser(username, idMessage)) {
