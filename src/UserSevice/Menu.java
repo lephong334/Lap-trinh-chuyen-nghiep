@@ -82,7 +82,7 @@ public class Menu {
 	public boolean inviteUserPublicGroup(String username, String clubName) {
 		User invitingUser = managementUser.checkAccountWithoutPassword(username);
 		if (isLogin() && invitingUser != null) {
-			int id =user.getPublicGroupIdByGroupName(clubName);
+			int id = user.getPublicGroupIdByGroupName(clubName);
 			if (id > -1 && managermentGroup.invitePublicGroup(id, invitingUser)) {
 				invitingUser.storePublicGroup(managermentGroup.getListPublicGroup().get(id), id);
 				return true;
@@ -104,7 +104,7 @@ public class Menu {
 
 	public boolean joinPublicGroupByCode(String code, String clubName) {
 		if (isLogin()) {
-			int id  = managermentGroup.getPublicGroupIdByGroupName(clubName);
+			int id = managermentGroup.getPublicGroupIdByGroupName(clubName);
 			if (managermentGroup.joinPublicGroupByCode(code, this.user, id)) {
 				user.storePublicGroup(managermentGroup.getListPublicGroup().get(id), id);
 				return true;
@@ -125,6 +125,22 @@ public class Menu {
 			}
 		}
 		return false;
+	}
+//Send message
+	public boolean sendMessageToUser(String username, String message) {
+		User receiver = managementUser.checkAccountWithoutPassword(username);
+		if (isLogin()) {
+			this.user.sentMessagetoUser(username, message);
+			receiver.receiveMessagetoUser(this.user.getUserName(), message);
+			return true;
+		}
+
+		return false;
+	}
+	
+	public String showAllMessageUser(String username) {
+		String out = this.user.showAllTheMessageUser(username);
+		return out;
 	}
 
 	public User getUser() {

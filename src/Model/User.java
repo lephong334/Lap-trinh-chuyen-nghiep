@@ -16,7 +16,11 @@ public class User {
 
 	private HashMap<String, Integer> listPublicGroup;
 	private HashMap<String, Integer> listPrivateGroup;
-	
+	private HashMap<String, List<String>> listMessageUser;
+	private HashMap<String, List<String>> listMessageGroup;
+	private HashMap<String, List<Integer>> listMessageHasSentToUser;
+	private HashMap<String, List<Integer>> listMessageHasSentToGroup;
+
 	public User(String id, String lastName, String firstName, String password, String gender, String dateOfBirth,
 			String userName) {
 		this.id = id;
@@ -29,19 +33,61 @@ public class User {
 		this.userName = userName;
 		this.listPublicGroup = new HashMap<>();
 		this.listPrivateGroup = new HashMap<>();
+		this.listMessageUser = new HashMap<>();
+		this.listMessageGroup = new HashMap<>();
+		this.listMessageHasSentToUser = new HashMap<>();
+		this.listMessageHasSentToGroup = new HashMap<>();
 	}
 
-	public void storePublicGroup(PublicGroup group,int id) {
-		
+	public void sentMessagetoUser(String username, String message) {
+		if (listMessageUser.get(username) == null) {
+			listMessageUser.put(username, new ArrayList<String>());
+			listMessageHasSentToUser.put(username, new ArrayList<Integer>());
+			listMessageUser.get(username).add(this.userName + ": " + message);
+			listMessageHasSentToUser.get(username).add(0);
+		} else {
+			listMessageUser.get(username).add(this.userName + ": " + message);
+			listMessageHasSentToUser.get(username).add(listMessageUser.get(username).size() - 1);
+		}
+
+	}
+
+	public void receiveMessagetoUser(String username, String message) {
+		if (listMessageUser.get(username) == null) {
+			listMessageUser.put(username, new ArrayList<String>());
+			listMessageHasSentToUser.put(username, new ArrayList<Integer>());
+			listMessageUser.get(username).add(username + ": " + message);
+		} else {
+			listMessageUser.get(username).add(username + ": " + message);
+		}
+
+	}
+
+	public String showAllTheMessageUser(String username) {
+		List<String> temporary = listMessageUser.get(username);
+		if (temporary != null) {
+			String out = new String();
+			for (int i = 0; i < temporary.size(); i++) {
+				out += temporary.get(i) + "\n";
+			}
+			return out;
+		}
+		return null;
+	}
+
+	public void storePublicGroup(PublicGroup group, int id) {
+
 		this.listPublicGroup.put(group.getName(), id);
 	}
-	public void storePrivateGroup(PrivateGroup group,int id) {
+
+	public void storePrivateGroup(PrivateGroup group, int id) {
 		this.listPrivateGroup.put(group.getName(), id);
 	}
 
 	public int getPublicGroupIdByGroupName(String name) {
 		return this.listPublicGroup.get(name);
 	}
+
 	public int getprivateGroupIdByGroupName(String name) {
 		return this.listPrivateGroup.get(name);
 	}
@@ -125,6 +171,5 @@ public class User {
 	public void setListPrivateGroup(HashMap<String, Integer> listPrivateGroup) {
 		this.listPrivateGroup = listPrivateGroup;
 	}
-
 
 }

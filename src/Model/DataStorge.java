@@ -28,10 +28,6 @@ public class DataStorge {
 
 ///////Public group : head
 
-//	public String generateCode(int groupID) {
-//		return listPublicGroup.get(groupID).createJoinCode();
-//	}
-//
 
 	/////// Public group : end
 
