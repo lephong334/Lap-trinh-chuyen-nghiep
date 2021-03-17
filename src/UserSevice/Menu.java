@@ -1,5 +1,6 @@
 package UserSevice;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -127,6 +128,21 @@ public class Menu {
 		return false;
 	}
 
+	// send file
+	public boolean sendFileToUser(String username, String address) {
+		File file = new File(address);
+		User receiver = managementUser.checkAccountWithoutPassword(username);
+		if (isLogin() &&  file.exists()) {
+			String filename = file.getName();
+			String idFile = this.user.sendFileToUser(filename);
+			receiver.receiveFileUser(filename);
+			dataStorage.copyANewFileUsingBufferedInputOutputStream(address, idFile, filename);
+			return true;
+		}
+
+		return false;
+	}
+
 //Send message
 	public boolean sendMessageToGroup(String clubname, String message) {
 		int id = managermentGroup.getPublicGroupIdByGroupName(clubname);
@@ -137,12 +153,12 @@ public class Menu {
 		if (id == -1) {
 			id = managermentGroup.getprivateGroupIdByGroupName(clubname);
 			if (id != -1) {
-				idMessage = managermentGroup.getListPrivateGroup().get(id).receiveMessageGroup(message,this.user);
+				idMessage = managermentGroup.getListPrivateGroup().get(id).receiveMessageGroup(message, this.user);
 				this.user.sentMessageToGroup(clubname, message, idMessage);
 				return true;
 			}
 		} else {
-			idMessage = managermentGroup.getListPublicGroup().get(id).receiveMessageGroup(message,this.user);
+			idMessage = managermentGroup.getListPublicGroup().get(id).receiveMessageGroup(message, this.user);
 			this.user.sentMessageToGroup(clubname, message, idMessage);
 			return true;
 		}
@@ -163,6 +179,7 @@ public class Menu {
 		}
 		return out;
 	}
+
 	public boolean deleteMessageGroup(String clubname, int idMessage) {
 		String out = null;
 		if (isLogin() && this.user.deleteMessageGroup(clubname, idMessage)) {
@@ -173,7 +190,7 @@ public class Menu {
 			} else {
 				return managermentGroup.getListPublicGroup().get(id).deleteMessageGroup(idMessage);
 			}
-			
+
 		}
 		return false;
 	}

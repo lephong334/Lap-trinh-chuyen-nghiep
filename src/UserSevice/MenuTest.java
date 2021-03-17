@@ -206,7 +206,7 @@ class MenuTest {
 		menu.login("banana", "123");
 		menu.createPublicGroup("NoOne");
 		menu.sendMessageToGroup("NoOne", "The winter is comming");
-		boolean resulDeleteMessage =menu.deleteMessageGroup("NoOne", 0);
+		boolean resulDeleteMessage = menu.deleteMessageGroup("NoOne", 0);
 		menu.inviteUserPublicGroup("nonono", "NoOne");
 		menu.logout();
 		menu.login("nonono", "123");
@@ -214,6 +214,17 @@ class MenuTest {
 		String resultShowMessage = menu.showAllMessageGroup("NoOne");
 		assertTrue(resulDeleteMessage);
 		assertEquals("This message has been deleted\n" + "nonono: The summer has begin!\n", resultShowMessage);
+	}
+
+	@Test
+	void sendFileToUser() {
+		menu.addAccount("lastname", "first", "123", "no", "2021", "banana");
+		menu.addAccount("lastname", "first", "123", "no", "2021", "nonono");
+		menu.login("banana", "123");
+		boolean result = menu.sendFileToUser("nonono",
+				"D:\\all_study\\coding practice\\Test send file\\XDSoiW2-msi-wallpaper.jpg");
+		assertTrue(result);
+
 	}
 
 }

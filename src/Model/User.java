@@ -19,6 +19,8 @@ public class User {
 	private HashMap<String, List<String>> listMessageUser;
 	private HashMap<String, List<Integer>> listMessageHasSentToUser;
 	private HashMap<String, List<Integer>> listMessageHasSentToGroup;
+	private HashMap<String, Integer> listFileHasSent;
+	private List<String> listFileHasReceive;
 
 	public User(String id, String lastName, String firstName, String password, String gender, String dateOfBirth,
 			String userName) {
@@ -33,9 +35,20 @@ public class User {
 		this.listPublicGroup = new HashMap<>();
 		this.listPrivateGroup = new HashMap<>();
 		this.listMessageUser = new HashMap<>();
-
 		this.listMessageHasSentToUser = new HashMap<>();
 		this.listMessageHasSentToGroup = new HashMap<>();
+		this.listFileHasSent = new HashMap<>();
+		this.listFileHasReceive = new ArrayList<String>();
+	}
+
+	// file
+	public String sendFileToUser(String filename) {
+		this.listFileHasSent.put(filename, listFileHasSent.size());
+		return this.userName + listFileHasSent.size();
+	}
+
+	public void receiveFileUser(String filename) {
+		this.listFileHasReceive.add(filename);
 	}
 
 	// message
