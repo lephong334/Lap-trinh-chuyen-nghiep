@@ -61,6 +61,21 @@ public class User {
 		return out;
 	}
 
+	public String removeFilewhichHasSent(String filename) {
+		String out = this.listFileHasSent.get(filename);
+		this.listFileHasSent.remove(filename);
+		return out;
+	}
+
+	public void removeFileWhichHasReceive(String filename) {
+		for (int i = 0; i < listFileHasReceive.size(); i++) {
+			if (listFileHasReceive.get(i).endsWith(filename)) {
+				listFileHasReceive.remove(i);
+				break;
+			}
+		}
+	}
+
 	// message
 	public boolean sentMessageToGroup(String clubname, String message, int idMessage) {
 		if (listPublicGroup.get(clubname) != null || listPrivateGroup.get(clubname) != null) {

@@ -169,6 +169,26 @@ public class Menu {
 		return null;
 	}
 
+	public boolean deleteFile(String filename) {
+		String receiver = this.user.removeFilewhichHasSent(filename);
+		if (isLogin() && receiver != null && dataStorage.DeleteFile(filename)) {
+			User user = managementUser.checkAccountWithoutPassword(receiver);
+			if (user != null) {
+				user.removeFileWhichHasReceive(filename);
+				return true;
+			}
+			int id = managermentGroup.getPublicGroupIdByGroupName(receiver);
+			if (id == -1) {
+				id = managermentGroup.getprivateGroupIdByGroupName(receiver);
+				managermentGroup.getListPrivateGroup().get(id).deleteFile(filename);
+			} else {
+				managermentGroup.getListPublicGroup().get(id).deleteFile(filename);
+			}
+			return true;
+		}
+		return false;
+	}
+
 //Send message
 	public boolean sendMessageToGroup(String clubname, String message) {
 		int id = managermentGroup.getPublicGroupIdByGroupName(clubname);

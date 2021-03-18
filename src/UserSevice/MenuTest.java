@@ -276,4 +276,27 @@ class MenuTest {
 		assertEquals("videoplayback.mp4\n", resultSecondPerson);
 	}
 
+	@Test
+	void deleteFileUser() {
+		menu.addAccount("lastname", "first", "123", "no", "2021", "banana");
+		menu.addAccount("lastname", "first", "123", "no", "2021", "nonono");
+		menu.login("banana", "123");
+		menu.sendFileToUser("nonono", "D:\\all_study\\coding practice\\Test send file\\XDSoiW2-msi-wallpaper.jpg");
+		menu.deleteFile("XDSoiW2-msi-wallpaper.jpg");
+		String result = menu.showAllFileHasSent("nonono");
+		assertEquals("", result);
+	}
+
+	@Test
+	void deleteFileGroup() {
+		menu.addAccount("lastname", "first", "123", "no", "2021", "banana");
+		menu.login("banana", "123");
+		menu.createPublicGroup("NoOne");
+		menu.sendFileToGroup("NoOne", "D:\\all_study\\coding practice\\Test send file\\XDSoiW2-msi-wallpaper.jpg");
+		menu.sendFileToGroup("NoOne", "D:\\all_study\\coding practice\\Test send file\\videoplayback.mp4");
+		menu.deleteFile("XDSoiW2-msi-wallpaper.jpg");
+		String result = menu.showAllFileHasSent("NoOne");
+		assertEquals("videoplayback.mp4\n", result);
+	}
+
 }

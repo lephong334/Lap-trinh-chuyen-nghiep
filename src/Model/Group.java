@@ -19,12 +19,22 @@ public class Group {
 		this.name = name;
 		this.listOfUsers.add(user);
 	}
+
 	public void receiveFileUser(String filename) {
 		this.listOfMedias.add(filename);
 	}
 
+	public void deleteFile(String filename) {
+		for (int i = 0; i < listOfMedias.size(); i++) {
+			if (listOfMedias.get(i).endsWith(filename)) {
+				listOfMedias.remove(i);
+				break;
+			}
+		}
+	}
+
 	public int receiveMessageGroup(String message, User user) {
-		listOfMessages.add(user.getUserName()+": "+message);
+		listOfMessages.add(user.getUserName() + ": " + message);
 		return listOfMessages.size() - 1;
 	}
 
