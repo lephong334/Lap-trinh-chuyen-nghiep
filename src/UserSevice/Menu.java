@@ -132,15 +132,41 @@ public class Menu {
 	public boolean sendFileToUser(String username, String address) {
 		File file = new File(address);
 		User receiver = managementUser.checkAccountWithoutPassword(username);
-		if (isLogin() &&  file.exists()) {
+		if (isLogin() && file.exists()) {
 			String filename = file.getName();
-			String idFile = this.user.sendFileToUser(filename);
+			String idFile = this.user.sendFile(filename, username);
 			receiver.receiveFileUser(filename);
 			dataStorage.copyANewFileUsingBufferedInputOutputStream(address, idFile, filename);
 			return true;
 		}
 
 		return false;
+	}
+
+	public boolean sendFileToGroup(String clubname, String address) {
+		File file = new File(address);
+		if (isLogin() && file.exists()) {
+			String filename = file.getName();
+			String idFile = this.user.sendFile(filename, clubname);
+			int id = managermentGroup.getPublicGroupIdByGroupName(clubname);
+			if (id == -1) {
+				id = managermentGroup.getprivateGroupIdByGroupName(clubname);
+				managermentGroup.getListPrivateGroup().get(id).receiveFileUser(filename);
+			} else {
+				managermentGroup.getListPublicGroup().get(id).receiveFileUser(filename);
+			}
+			dataStorage.copyANewFileUsingBufferedInputOutputStream(address, idFile, filename);
+			return true;
+		}
+
+		return false;
+	}
+
+	public String showAllFileHasSentToUSer(String receiver) {
+		if (isLogin()) {
+			return this.user.showListFileHasSentToUserOrGroup(receiver);
+		}
+		return null;
 	}
 
 //Send message

@@ -64,6 +64,14 @@ public class DataStorge {
 
 	}
 
+	public boolean DeleteFile(String fileName) {
+		File myObj = new File(listFile.get(fileName));
+		if (myObj.delete()) {
+			return true;
+		}
+		return false;
+	}
+
 	private void createFolder(String pathOut) {
 		File folder = new File(pathOut);
 		if (folder.exists()) {

@@ -19,7 +19,7 @@ public class User {
 	private HashMap<String, List<String>> listMessageUser;
 	private HashMap<String, List<Integer>> listMessageHasSentToUser;
 	private HashMap<String, List<Integer>> listMessageHasSentToGroup;
-	private HashMap<String, Integer> listFileHasSent;
+	private HashMap<String, String> listFileHasSent;
 	private List<String> listFileHasReceive;
 
 	public User(String id, String lastName, String firstName, String password, String gender, String dateOfBirth,
@@ -42,13 +42,23 @@ public class User {
 	}
 
 	// file
-	public String sendFileToUser(String filename) {
-		this.listFileHasSent.put(filename, listFileHasSent.size());
+	public String sendFile(String filename, String receiver) {
+		this.listFileHasSent.put(filename, receiver);
 		return this.userName + listFileHasSent.size();
 	}
 
 	public void receiveFileUser(String filename) {
 		this.listFileHasReceive.add(filename);
+	}
+
+	public String showListFileHasSentToUserOrGroup(String receiver) {
+		String out = new String();
+		for (HashMap.Entry<String, String> entry : listFileHasSent.entrySet()) {
+			if (entry.getValue().endsWith(receiver)) {
+				out += entry.getKey() + "\n";
+			}
+		}
+		return out;
 	}
 
 	// message

@@ -9,14 +9,18 @@ public class Group {
 	private User owner;
 
 	private List<String> listOfMessages;
-	private List<Media> listOfMedias;
+	private List<String> listOfMedias;
 	protected List<User> listOfUsers;
 
 	public void createGroup(String name, User user) {
 		this.listOfUsers = new ArrayList<User>();
 		this.listOfMessages = new ArrayList<String>();
+		this.listOfMedias = new ArrayList<String>();
 		this.name = name;
 		this.listOfUsers.add(user);
+	}
+	public void receiveFileUser(String filename) {
+		this.listOfMedias.add(filename);
 	}
 
 	public int receiveMessageGroup(String message, User user) {
@@ -64,11 +68,11 @@ public class Group {
 		this.listOfMessages = listOfMessages;
 	}
 
-	public List<Media> getListOfMedias() {
+	public List<String> getListOfMedias() {
 		return listOfMedias;
 	}
 
-	public void setListOfMedias(List<Media> listOfMedias) {
+	public void setListOfMedias(List<String> listOfMedias) {
 		this.listOfMedias = listOfMedias;
 	}
 
