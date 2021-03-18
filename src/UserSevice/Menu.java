@@ -162,7 +162,7 @@ public class Menu {
 		return false;
 	}
 
-	public String showAllFileHasSentToUSer(String receiver) {
+	public String showAllFileHasSent(String receiver) {
 		if (isLogin()) {
 			return this.user.showListFileHasSentToUserOrGroup(receiver);
 		}

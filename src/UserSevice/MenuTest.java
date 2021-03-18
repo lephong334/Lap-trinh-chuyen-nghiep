@@ -247,17 +247,33 @@ class MenuTest {
 		menu.addAccount("lastname", "first", "123", "no", "2021", "Obama");
 		menu.addAccount("lastname", "first", "123", "no", "2021", "noOne");
 		menu.login("banana", "123");
-		menu.createPublicGroup("NoOne");
 		menu.sendFileToUser("nonono", "D:\\all_study\\coding practice\\Test send file\\XDSoiW2-msi-wallpaper.jpg");
 		menu.sendFileToUser("nonono", "D:\\all_study\\coding practice\\Test send file\\videoplayback.mp4");
 		menu.sendFileToUser("Obama", "D:\\all_study\\coding practice\\Test send file\\Holopsicon.mp3");
-		String resultFirstPerson = menu.showAllFileHasSentToUSer("nonono");
-		String resultSecondPerson = menu.showAllFileHasSentToUSer("Obama");
-		String resultThirdPerson = menu.showAllFileHasSentToUSer("noOne");
+		String resultFirstPerson = menu.showAllFileHasSent("nonono");
+		String resultSecondPerson = menu.showAllFileHasSent("Obama");
+		String resultThirdPerson = menu.showAllFileHasSent("noOne");
 		assertEquals("videoplayback.mp4\n" + "XDSoiW2-msi-wallpaper.jpg\n", resultFirstPerson);
 		assertEquals("Holopsicon.mp3\n", resultSecondPerson);
 		assertEquals("", resultThirdPerson);
 
+	}
+
+	@Test
+	void showFileGroup() {
+		menu.addAccount("lastname", "first", "123", "no", "2021", "banana");
+		menu.addAccount("lastname", "first", "123", "no", "2021", "nonono");
+		menu.login("banana", "123");
+		menu.createPublicGroup("NoOne");
+		menu.sendFileToGroup("NoOne", "D:\\all_study\\coding practice\\Test send file\\Holopsicon.mp3");
+		String resultFirstPerson = menu.showAllFileHasSent("NoOne");
+		menu.inviteUserPublicGroup("nonono", "NoOne");
+		menu.logout();
+		menu.login("nonono", "123");
+		menu.sendFileToGroup("NoOne", "D:\\all_study\\coding practice\\Test send file\\videoplayback.mp4");
+		String resultSecondPerson = menu.showAllFileHasSent("NoOne");
+		assertEquals("Holopsicon.mp3\n", resultFirstPerson);
+		assertEquals("videoplayback.mp4\n", resultSecondPerson);
 	}
 
 }
