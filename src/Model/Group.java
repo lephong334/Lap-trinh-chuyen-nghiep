@@ -20,6 +20,15 @@ public class Group {
 		this.listOfUsers.add(user);
 	}
 
+	public String findText(String keyword) {
+		for (int i = 0; i < listOfMessages.size(); i++) {
+			if (listOfMessages.get(i).contains(keyword)) {
+				return listOfMessages.get(i);
+			}
+		}
+		return null;
+	}
+
 	public void receiveFileUser(String filename) {
 		this.listOfMedias.add(filename);
 	}

@@ -3,6 +3,9 @@ package Model;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map.Entry;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class User {
 	private String id;
@@ -39,6 +42,37 @@ public class User {
 		this.listMessageHasSentToGroup = new HashMap<>();
 		this.listFileHasSent = new HashMap<>();
 		this.listFileHasReceive = new ArrayList<String>();
+	}
+
+	public List<Integer> getListPublicGroupId() {
+		List<Integer> temporary = new ArrayList<Integer>();
+		for (Entry<String, Integer> entry : listPublicGroup.entrySet()) {
+			temporary.add(entry.getValue());
+		}
+		return temporary;
+	}
+
+	public List<Integer> getListPrivateGroupId() {
+		List<Integer> temporary = new ArrayList<Integer>();
+		for (Entry<String, Integer> entry : listPrivateGroup.entrySet()) {
+			temporary.add(entry.getValue());
+		}
+		return temporary;
+	}
+
+	public String findTextMessageToUser(String keyword) {
+		for (Entry<String, List<String>> entry : listMessageUser.entrySet()) {
+			List<String> temporary = entry.getValue();
+			for (int i = 0; i < temporary.size(); i++) {
+				String pattern = "\\b" + keyword + "\\b";
+				Pattern p = Pattern.compile(pattern);
+				Matcher m = p.matcher(temporary.get(i));
+				if (m.find()) {
+					return temporary.get(i);
+				}
+			}
+		}
+		return null;
 	}
 
 	// file

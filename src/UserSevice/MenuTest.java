@@ -104,7 +104,7 @@ class MenuTest {
 		menu.inviteUserPublicGroup("nonono", "NoOne");
 		menu.logout();
 		menu.login("nonono", "123");
-		String result = menu.getManagermentGroup().getListPublicGroup().get(0).getListOfUsers().get(1).getUserName();
+		String result = menu.getManagementGroup().getListPublicGroup().get(0).getListOfUsers().get(1).getUserName();
 		assertEquals("nonono", result);
 
 	}
@@ -119,7 +119,7 @@ class MenuTest {
 		menu.logout();
 		menu.login("nonono", "123");
 		menu.joinPublicGroupByCode(code, "NoOne");
-		String result = menu.getManagermentGroup().getListPublicGroup().get(0).getListOfUsers().get(1).getUserName();
+		String result = menu.getManagementGroup().getListPublicGroup().get(0).getListOfUsers().get(1).getUserName();
 		assertEquals("nonono", result);
 	}
 
@@ -132,7 +132,7 @@ class MenuTest {
 		menu.inviteUserPrivateGroup("nonono", "NoOne");
 		menu.logout();
 		menu.login("nonono", "123");
-		String result = menu.getManagermentGroup().getListPrivateGroup().get(0).getListOfUsers().get(1).getUserName();
+		String result = menu.getManagementGroup().getListPrivateGroup().get(0).getListOfUsers().get(1).getUserName();
 		assertEquals("nonono", result);
 
 	}
@@ -299,4 +299,23 @@ class MenuTest {
 		assertEquals("videoplayback.mp4\n", result);
 	}
 
+	@Test
+	void findtext00() {
+		menu.addAccount("lastname", "first", "123", "no", "2021", "banana");
+		menu.addAccount("lastname", "first", "123", "no", "2021", "nonono");
+		menu.login("banana", "123");
+		menu.sendMessageToUser("nonono", "the winter is comming");
+		menu.createPublicGroup("NoOne");
+		menu.sendMessageToGroup("NoOne", "the summer has begin");
+		menu.inviteUserPublicGroup("nonono", "NoOne");
+		menu.createPrivateGroup("NoTwo");
+		menu.sendMessageToGroup("NoTwo", "The time has come");
+		String resultUser = menu.findTextMessage("winter");
+		String resultPublicGroup = menu.findTextMessage("summer");
+		String resultPrivateGroup = menu.findTextMessage("time");
+
+		assertEquals("banana: the winter is comming", resultUser);
+		assertEquals("banana: the summer has begin", resultPublicGroup);
+		assertEquals("banana: The time has come", resultPrivateGroup);
+	}
 }

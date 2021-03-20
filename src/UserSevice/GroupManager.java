@@ -10,8 +10,8 @@ import Model.User;
 
 public class GroupManager {
 	DataStorge dataStorge;
-	protected List<PublicGroup> listPublicGroup;
-	protected List<PrivateGroup> listPrivateGroup;
+	private List<PublicGroup> listPublicGroup;
+	private List<PrivateGroup> listPrivateGroup;
 
 	public GroupManager(DataStorge dataStorge) {
 		this.dataStorge = dataStorge;
@@ -25,15 +25,16 @@ public class GroupManager {
 		}
 		return false;
 	}
-	public boolean invitePrivateGroup(int id, User user,User member) {
-		if (listPrivateGroup.get(id).inviteUser(user,member)) {
+
+	public boolean invitePrivateGroup(int id, User user, User member) {
+		if (listPrivateGroup.get(id).inviteUser(user, member)) {
 			return true;
 		}
 		return false;
 	}
 
-	public boolean joinPublicGroupByCode(String code, User user,int id) {
-		
+	public boolean joinPublicGroupByCode(String code, User user, int id) {
+
 		if (id > -1) {
 			listPublicGroup.get(id).joinByCode(user, code);
 		}
@@ -45,7 +46,7 @@ public class GroupManager {
 			PublicGroup group = new PublicGroup();
 			group.createGroup(name, user);
 			this.listPublicGroup.add(group);
-			user.storePublicGroup(group, this.listPublicGroup.size()-1);
+			user.storePublicGroup(group, this.listPublicGroup.size() - 1);
 			return true;
 		}
 		return false;
@@ -57,7 +58,7 @@ public class GroupManager {
 			PrivateGroup group = new PrivateGroup();
 			group.createGroup(name, user);
 			this.listPrivateGroup.add(group);
-			user.storePrivateGroup(group, this.listPrivateGroup.size()-1);
+			user.storePrivateGroup(group, this.listPrivateGroup.size() - 1);
 			return true;
 		}
 		return false;
@@ -103,6 +104,7 @@ public class GroupManager {
 	}
 
 	public List<PublicGroup> getListPublicGroup() {
+
 		return listPublicGroup;
 	}
 
