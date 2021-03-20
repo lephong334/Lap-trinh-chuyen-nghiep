@@ -37,6 +37,7 @@ public class GroupManager {
 
 		if (id > -1) {
 			listPublicGroup.get(id).joinByCode(user, code);
+			return true;
 		}
 		return false;
 	}
@@ -65,7 +66,7 @@ public class GroupManager {
 
 	}
 
-	public boolean checkNameOfPublicGroup(String name) {
+	private boolean checkNameOfPublicGroup(String name) {
 		for (int i = 0; i < listPublicGroup.size(); i++) {
 			if (listPublicGroup.get(i).getName().equalsIgnoreCase(name)) {
 				return false;
@@ -74,7 +75,7 @@ public class GroupManager {
 		return true;
 	}
 
-	public boolean checkNameOfPrivateGroup(String name) {
+	private boolean checkNameOfPrivateGroup(String name) {
 		for (int i = 0; i < listPrivateGroup.size(); i++) {
 			if (listPrivateGroup.get(i).getName().equalsIgnoreCase(name)) {
 				return false;

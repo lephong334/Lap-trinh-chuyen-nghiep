@@ -58,7 +58,7 @@ public class UserManager {
 		return null;
 	}
 
-	public String doMD5(String md5) {
+	private String doMD5(String md5) {
 		try {
 			java.security.MessageDigest md = java.security.MessageDigest.getInstance("MD5");
 			byte[] array = md.digest(md5.getBytes());

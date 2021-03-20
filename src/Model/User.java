@@ -24,6 +24,7 @@ public class User {
 	private HashMap<String, List<Integer>> listMessageHasSentToGroup;
 	private HashMap<String, String> listFileHasSent;
 	private List<String> listFileHasReceive;
+	private HashMap<String, int[]> showLimitedMessage;
 
 	public User(String id, String lastName, String firstName, String password, String gender, String dateOfBirth,
 			String userName) {
@@ -42,6 +43,42 @@ public class User {
 		this.listMessageHasSentToGroup = new HashMap<>();
 		this.listFileHasSent = new HashMap<>();
 		this.listFileHasReceive = new ArrayList<String>();
+		this.showLimitedMessage = new HashMap<String, int[]>();
+	}
+
+	public String showLimitedMessageUser(int lastestMessage, int oldMessage, String username) {
+		int[] temporaryInteger = { 0, lastestMessage, oldMessage };
+		showLimitedMessage.put(username, temporaryInteger);
+
+		List<String> temporaryList = listMessageUser.get(username);
+		if (temporaryList != null) {
+			String out = new String();
+			int limitLoop = lastestMessage < temporaryList.size() ? lastestMessage : temporaryList.size();
+			for (int i = 0; i < limitLoop; i++) {
+				out += temporaryList.get(i) + "\n";
+			}
+			return out;
+		}
+		return null;
+	}
+
+	public String showNextLimitedMessageUser(String username) {
+		if (showLimitedMessage.get(username) != null) {
+			int[] temporaryInteger = showLimitedMessage.get(username);
+			temporaryInteger[0] = temporaryInteger[1];
+			temporaryInteger[1] = temporaryInteger[1] + temporaryInteger[2];
+			List<String> temporaryList = listMessageUser.get(username);
+			if (temporaryList != null) {
+				String out = new String();
+				int limitLoop = temporaryInteger[1] < temporaryList.size() ? temporaryInteger[1] : temporaryList.size();
+				for (int i = temporaryInteger[0]; i < limitLoop; i++) {
+					out += temporaryList.get(i) + "\n";
+				}
+				showLimitedMessage.put(username, temporaryInteger);
+				return out;
+			}
+		}
+		return null;
 	}
 
 	public List<Integer> getListPublicGroupId() {

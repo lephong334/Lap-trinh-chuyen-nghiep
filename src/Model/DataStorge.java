@@ -25,20 +25,20 @@ public class DataStorge {
 		listPublicGroup = new ArrayList<PublicGroup>();
 		listPrivateGroup = new ArrayList<PrivateGroup>();
 		listFile = new HashMap<String, String>();
-
+		createFolder("D:\\all_study\\coding practice\\Test send file\\DataStore");
 	}
 
-	public void copyANewFileUsingBufferedInputOutputStream(String filePathIn, String idFile, String filename) {
+	public boolean copyANewFileUsingBufferedInputOutputStream(String filePathIn, String idFile, String filename) {
 		FileInputStream fis = null;
 		FileOutputStream fos = null;
 		BufferedInputStream bis = null;
 		BufferedOutputStream bos = null;
-		String temporary = "D:\\all_study\\coding practice\\Test send file\\" + idFile;
-		listFile.put(filename, temporary + "\\" + filename);
-		createFolder(temporary);
+		String temporary = "D:\\all_study\\coding practice\\Test send file\\DataStore\\" + idFile;
+		listFile.put(filename, temporary );
+		
 		try {
 			fis = new FileInputStream(filePathIn);
-			fos = new FileOutputStream(temporary + "\\" + filename);
+			fos = new FileOutputStream(temporary);
 			bis = new BufferedInputStream(fis);
 			bos = new BufferedOutputStream(fos);
 
@@ -57,10 +57,12 @@ public class DataStorge {
 				bis.close();
 				fis.close();
 				fos.close();
+				return true;
 			} catch (IOException e) {
 				System.out.println(e.getMessage());
 			}
 		}
+		return false;
 
 	}
 

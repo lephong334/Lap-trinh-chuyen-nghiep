@@ -300,7 +300,7 @@ class MenuTest {
 	}
 
 	@Test
-	void findtext00() {
+	void findtext() {
 		menu.addAccount("lastname", "first", "123", "no", "2021", "banana");
 		menu.addAccount("lastname", "first", "123", "no", "2021", "nonono");
 		menu.login("banana", "123");
@@ -317,5 +317,24 @@ class MenuTest {
 		assertEquals("banana: the winter is comming", resultUser);
 		assertEquals("banana: the summer has begin", resultPublicGroup);
 		assertEquals("banana: The time has come", resultPrivateGroup);
+	}
+
+	@Test
+	void showLimitedTestUser() {
+		menu.addAccount("lastname", "first", "123", "no", "2021", "banana");
+		menu.addAccount("lastname", "first", "123", "no", "2021", "nonono");
+		menu.login("banana", "123");
+		menu.sendMessageToUser("nonono", "the winter is comming");
+		menu.sendMessageToUser("nonono", "the summer is comming");
+		menu.sendMessageToUser("nonono", "the night is comming");
+		String showMTest= menu.showLimitedMessageToUser(1, 1, "nonono");
+		String showNextKTest00 = menu.showNextLimitedMessageToUser("nonono");
+		String showNextKTest01 = menu.showNextLimitedMessageToUser("nonono");
+		
+		assertEquals("banana: the winter is comming\n", showMTest);
+		assertEquals("banana: the summer is comming\n", showNextKTest00);
+		assertEquals("banana: the night is comming\n", showNextKTest01);
+		
+
 	}
 }

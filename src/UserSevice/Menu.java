@@ -23,6 +23,7 @@ public class Menu {
 		dataStorage = new DataStorge();
 		managementUser = new UserManager(dataStorage);
 		managementGroup = new GroupManager(dataStorage);
+
 	}
 
 	public boolean addAccount(String lastName, String firstName, String password, String gender, String dateOfBirth,
@@ -189,6 +190,14 @@ public class Menu {
 	}
 
 //Send message
+	public String showLimitedMessageToUser(int lastestMessage, int oldMessage, String username) {
+		return this.user.showLimitedMessageUser(lastestMessage, oldMessage, username);
+	}
+
+	public String showNextLimitedMessageToUser(String username) {
+		return this.user.showNextLimitedMessageUser(username);
+	}
+
 	public String findTextMessage(String keyword) {
 
 		if (!isLogin()) {
