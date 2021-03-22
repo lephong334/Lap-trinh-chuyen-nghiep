@@ -51,15 +51,14 @@ public class User {
 		showLimitedMessage.put(username, temporaryInteger);
 
 		List<String> temporaryList = listMessageUser.get(username);
-		if (temporaryList != null) {
-			String out = new String();
-			int limitLoop = lastestMessage < temporaryList.size() ? lastestMessage : temporaryList.size();
-			for (int i = 0; i < limitLoop; i++) {
-				out += temporaryList.get(i) + "\n";
-			}
-			return out;
+
+		String out = new String();
+		int limitLoop = lastestMessage < temporaryList.size() ? lastestMessage : temporaryList.size();
+		for (int i = 0; i < limitLoop; i++) {
+			out += temporaryList.get(i) + "\n";
 		}
-		return null;
+		return out;
+
 	}
 
 	public String showNextLimitedMessageUser(String username) {
@@ -68,15 +67,15 @@ public class User {
 			temporaryInteger[0] = temporaryInteger[1];
 			temporaryInteger[1] = temporaryInteger[1] + temporaryInteger[2];
 			List<String> temporaryList = listMessageUser.get(username);
-			if (temporaryList != null) {
-				String out = new String();
-				int limitLoop = temporaryInteger[1] < temporaryList.size() ? temporaryInteger[1] : temporaryList.size();
-				for (int i = temporaryInteger[0]; i < limitLoop; i++) {
-					out += temporaryList.get(i) + "\n";
-				}
-				showLimitedMessage.put(username, temporaryInteger);
-				return out;
+
+			String out = new String();
+			int limitLoop = temporaryInteger[1] < temporaryList.size() ? temporaryInteger[1] : temporaryList.size();
+			for (int i = temporaryInteger[0]; i < limitLoop; i++) {
+				out += temporaryList.get(i) + "\n";
 			}
+			showLimitedMessage.put(username, temporaryInteger);
+			return out;
+
 		}
 		return null;
 	}

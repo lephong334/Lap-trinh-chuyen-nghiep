@@ -11,6 +11,7 @@ public class Group {
 	private List<String> listOfMessages;
 	private List<String> listOfMedias;
 	protected List<User> listOfUsers;
+	private int[] showLimitedMessage;
 
 	public void createGroup(String name, User user) {
 		this.listOfUsers = new ArrayList<User>();
@@ -18,6 +19,34 @@ public class Group {
 		this.listOfMedias = new ArrayList<String>();
 		this.name = name;
 		this.listOfUsers.add(user);
+	}
+
+	public String showLimitedMessageGroup(int lastestMessage, int oldMessage) {
+		int[] temporaryInteger = { 0, lastestMessage, oldMessage };
+		showLimitedMessage = temporaryInteger;
+
+		String out = new String();
+		int limitLoop = lastestMessage < listOfMessages.size() ? lastestMessage : listOfMessages.size();
+		for (int i = 0; i < limitLoop; i++) {
+			out += listOfMessages.get(i) + "\n";
+		}
+		return out;
+
+	}
+
+	public String showNextLimitedMessageGroup() {
+
+		int[] temporaryInteger = showLimitedMessage;
+		temporaryInteger[0] = temporaryInteger[1];
+		temporaryInteger[1] = temporaryInteger[1] + temporaryInteger[2];
+		String out = new String();
+
+		int limitLoop = temporaryInteger[1] < listOfMessages.size() ? temporaryInteger[1] : listOfMessages.size();
+		for (int i = temporaryInteger[0]; i < limitLoop; i++) {
+			out += listOfMessages.get(i) + "\n";
+		}
+
+		return out;
 	}
 
 	public String findText(String keyword) {

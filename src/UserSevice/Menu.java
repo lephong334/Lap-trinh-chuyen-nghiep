@@ -190,6 +190,36 @@ public class Menu {
 	}
 
 //Send message
+	public String showLimitedMessageToGroup(int lastestMessage, int oldMessage,String clubname) {
+		String out = new String();
+		if (isLogin() && this.user.showAllMessageGroup(clubname)) {
+			int id = managementGroup.getPublicGroupIdByGroupName(clubname);
+			if (id == -1) {
+				id = managementGroup.getprivateGroupIdByGroupName(clubname);
+				out = managementGroup.getListPrivateGroup().get(id).showLimitedMessageGroup(lastestMessage, oldMessage);
+			} else {
+				out = managementGroup.getListPublicGroup().get(id).showLimitedMessageGroup(lastestMessage, oldMessage);
+			}
+			return out;
+		}
+		return out;
+		
+	}
+	public String showNextLimitedMessageToGroup(String clubname) {
+		String out = new String();
+		if (isLogin() && this.user.showAllMessageGroup(clubname)) {
+			int id = managementGroup.getPublicGroupIdByGroupName(clubname);
+			if (id == -1) {
+				id = managementGroup.getprivateGroupIdByGroupName(clubname);
+				out = managementGroup.getListPrivateGroup().get(id).showNextLimitedMessageGroup();
+			} else {
+				out = managementGroup.getListPublicGroup().get(id).showNextLimitedMessageGroup();
+			}
+			return out;
+		}
+		return out;
+		
+	}
 	public String showLimitedMessageToUser(int lastestMessage, int oldMessage, String username) {
 		return this.user.showLimitedMessageUser(lastestMessage, oldMessage, username);
 	}
@@ -243,7 +273,7 @@ public class Menu {
 	}
 
 	public String showAllMessageGroup(String clubname) {
-		String out = null;
+		String out = new String();
 		if (isLogin() && this.user.showAllMessageGroup(clubname)) {
 			int id = managementGroup.getPublicGroupIdByGroupName(clubname);
 			if (id == -1) {
