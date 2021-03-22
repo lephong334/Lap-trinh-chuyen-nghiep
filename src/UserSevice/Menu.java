@@ -190,7 +190,21 @@ public class Menu {
 	}
 
 //Send message
-	public String showLimitedMessageToGroup(int lastestMessage, int oldMessage,String clubname) {
+	public boolean leaveTheGroup(String clubname) {
+		if (isLogin()) {
+			int id = this.user.leaveThePublicGroup(clubname);
+			if (id != -1) {
+				return managementGroup.getListPublicGroup().get(id).leaveTheGroup(this.user);
+			}
+			id = this.user.leaveThePrivateGroup(clubname);
+			if (id != -1) {
+				return managementGroup.getListPrivateGroup().get(id).leaveTheGroup(this.user);
+			}
+		}
+		return false;
+	}
+
+	public String showLimitedMessageToGroup(int lastestMessage, int oldMessage, String clubname) {
 		String out = new String();
 		if (isLogin() && this.user.showAllMessageGroup(clubname)) {
 			int id = managementGroup.getPublicGroupIdByGroupName(clubname);
@@ -203,8 +217,9 @@ public class Menu {
 			return out;
 		}
 		return out;
-		
+
 	}
+
 	public String showNextLimitedMessageToGroup(String clubname) {
 		String out = new String();
 		if (isLogin() && this.user.showAllMessageGroup(clubname)) {
@@ -218,8 +233,9 @@ public class Menu {
 			return out;
 		}
 		return out;
-		
+
 	}
+
 	public String showLimitedMessageToUser(int lastestMessage, int oldMessage, String username) {
 		return this.user.showLimitedMessageUser(lastestMessage, oldMessage, username);
 	}

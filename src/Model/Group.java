@@ -21,6 +21,10 @@ public class Group {
 		this.listOfUsers.add(user);
 	}
 
+	public boolean leaveTheGroup(User user) {
+		return listOfUsers.remove((user));
+	}
+
 	public String showLimitedMessageGroup(int lastestMessage, int oldMessage) {
 		int[] temporaryInteger = { 0, lastestMessage, oldMessage };
 		showLimitedMessage = temporaryInteger;

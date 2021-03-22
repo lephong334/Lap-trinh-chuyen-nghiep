@@ -46,6 +46,20 @@ public class User {
 		this.showLimitedMessage = new HashMap<String, int[]>();
 	}
 
+	public Integer leaveThePublicGroup(String clubname) {
+		if (listPublicGroup.get(clubname) != null) {
+			return listPublicGroup.remove(clubname);
+		}
+		return -1;
+	}
+
+	public Integer leaveThePrivateGroup(String clubname) {
+		if (listPrivateGroup.get(clubname) != null) {
+			return listPrivateGroup.remove(clubname);
+		}
+		return -1;
+	}
+
 	public String showLimitedMessageUser(int lastestMessage, int oldMessage, String username) {
 		int[] temporaryInteger = { 0, lastestMessage, oldMessage };
 		showLimitedMessage.put(username, temporaryInteger);

@@ -354,4 +354,33 @@ class MenuTest {
 		assertEquals("banana: the night is comming\n", showNextKTest01);
 
 	}
+
+	@Test
+	void LeaveTheGroup() {
+		menu.addAccount("lastname", "first", "123", "no", "2021", "banana");
+		menu.login("banana", "123");
+		menu.createPrivateGroup("NoOne");
+		boolean res = menu.leaveTheGroup("NoOne");
+		assertTrue(res);
+	}
+
+	@Test
+	void LeaveTheGroupAndCantReadMessage() {
+		menu.addAccount("lastname", "first", "123", "no", "2021", "banana");
+		menu.addAccount("lastname", "first", "123", "no", "2021", "nonono");
+		menu.login("banana", "123");
+		menu.createPrivateGroup("NoOne");
+		menu.inviteUserPrivateGroup("nonono", "NoOne");
+		menu.sendMessageToGroup("NoOne", "the winter is comming");
+		menu.sendMessageToGroup("NoOne", "the summer is comming");
+		String notLeaveTheGroup = menu.showAllMessageGroup("NoOne");
+		menu.leaveTheGroup("NoOne");
+		String leaveTheGroup = menu.showAllMessageGroup("NoOne");
+		menu.logout();
+		menu.login("nonono", "123");
+		String otherMember = menu.showAllMessageGroup("NoOne");
+		assertEquals("banana: the winter is comming\nbanana: the summer is comming\n", notLeaveTheGroup);
+		assertEquals("", leaveTheGroup);
+		assertEquals("banana: the winter is comming\nbanana: the summer is comming\n", otherMember);
+	}
 }
