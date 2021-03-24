@@ -1,5 +1,6 @@
 package UserSevice;
 
+import java.util.HashMap;
 import java.util.List;
 
 import Model.DataStorge;
@@ -17,6 +18,105 @@ public class GroupManager {
 		this.dataStorge = dataStorge;
 		this.listPublicGroup = dataStorge.getListPublicGroup();
 		this.listPrivateGroup = dataStorge.getListPrivateGroup();
+	}
+
+	public int sendMessageToGroup(String clubname, String message, User user) {
+		int id = this.getPublicGroupIdByGroupName(clubname);
+		if (id != -1) {
+			return this.listPublicGroup.get(id).receiveMessageGroup(message, user);
+
+		}
+		id = this.getprivateGroupIdByGroupName(clubname);
+		if (id != -1) {
+			return this.listPrivateGroup.get(id).receiveMessageGroup(message, user);
+
+		}
+		return -1;
+	}
+
+	public boolean deleteMessageGroup(String clubname, int idMessage) {
+		int id = this.getPublicGroupIdByGroupName(clubname);
+		if (id != -1) {
+			this.listPublicGroup.get(id).deleteMessageGroup(idMessage);
+			return true;
+		}
+		id = this.getprivateGroupIdByGroupName(clubname);
+		if (id != -1) {
+			this.listPrivateGroup.get(id).deleteMessageGroup(idMessage);
+			return true;
+		}
+		return false;
+	}
+
+	public String showAllMessageGroup(String clubname, HashMap<String, String> aliasList) {
+		int id = this.getPublicGroupIdByGroupName(clubname);
+		if (id != -1) {
+			return this.listPublicGroup.get(id).showAllMessageGroup(aliasList);
+
+		}
+		id = this.getprivateGroupIdByGroupName(clubname);
+		if (id != -1) {
+			return this.listPrivateGroup.get(id).showAllMessageGroup(aliasList);
+
+		}
+		return null;
+	}
+
+	public String showNextLimitedMessageToGroup(String clubname, HashMap<String, String> aliasList) {
+		int id = this.getPublicGroupIdByGroupName(clubname);
+		if (id != -1) {
+			return this.listPublicGroup.get(id).showNextLimitedMessageGroup(aliasList);
+
+		}
+		id = this.getprivateGroupIdByGroupName(clubname);
+		if (id != -1) {
+			return this.listPrivateGroup.get(id).showNextLimitedMessageGroup(aliasList);
+
+		}
+		return null;
+	}
+
+	public String showLimitedMessageToGroup(String clubname, int lastestMessage, int oldMessage,
+			HashMap<String, String> aliasList) {
+		int id = this.getPublicGroupIdByGroupName(clubname);
+		if (id != -1) {
+			return this.listPublicGroup.get(id).showLimitedMessageGroup(lastestMessage, oldMessage, aliasList);
+
+		}
+		id = this.getprivateGroupIdByGroupName(clubname);
+		if (id != -1) {
+			return this.listPrivateGroup.get(id).showLimitedMessageGroup(lastestMessage, oldMessage, aliasList);
+
+		}
+		return null;
+	}
+
+	public boolean sendFileToGroup(String clubname, String filename) {
+		int id = this.getPublicGroupIdByGroupName(clubname);
+		if (id != -1) {
+			this.listPublicGroup.get(id).receiveFileUser(filename);
+			return true;
+		}
+		id = this.getprivateGroupIdByGroupName(clubname);
+		if (id != -1) {
+			this.listPrivateGroup.get(id).receiveFileUser(filename);
+			return true;
+		}
+		return false;
+	}
+
+	public boolean deleteFile(String clubname, String filename) {
+		int id = this.getPublicGroupIdByGroupName(clubname);
+		if (id != -1) {
+			this.listPublicGroup.get(id).deleteFile(filename);
+			return true;
+		}
+		id = this.getprivateGroupIdByGroupName(clubname);
+		if (id != -1) {
+			this.listPrivateGroup.get(id).deleteFile(filename);
+			return true;
+		}
+		return false;
 	}
 
 	public boolean invitePublicGroup(int id, User user) {

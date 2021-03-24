@@ -380,7 +380,7 @@ class MenuTest {
 		menu.login("nonono", "123");
 		String otherMember = menu.showAllMessageGroup("NoOne");
 		assertEquals("banana: the winter is comming\nbanana: the summer is comming\n", notLeaveTheGroup);
-		assertEquals("", leaveTheGroup);
+		assertEquals(null, leaveTheGroup);
 		assertEquals("banana: the winter is comming\nbanana: the summer is comming\n", otherMember);
 	}
 

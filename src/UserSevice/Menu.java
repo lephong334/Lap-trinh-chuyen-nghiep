@@ -156,13 +156,7 @@ public class Menu {
 		if (isLogin() && file.exists()) {
 			String filename = file.getName();
 			String idFile = this.user.sendFile(filename, clubname);
-			int id = managementGroup.getPublicGroupIdByGroupName(clubname);
-			if (id == -1) {
-				id = managementGroup.getprivateGroupIdByGroupName(clubname);
-				managementGroup.getListPrivateGroup().get(id).receiveFileUser(filename);
-			} else {
-				managementGroup.getListPublicGroup().get(id).receiveFileUser(filename);
-			}
+			managementGroup.sendFileToGroup(clubname, filename);
 			dataStorage.copyANewFileUsingBufferedInputOutputStream(address, idFile, filename);
 			return true;
 		}
@@ -185,14 +179,7 @@ public class Menu {
 				user.removeFileWhichHasReceive(filename);
 				return true;
 			}
-			int id = managementGroup.getPublicGroupIdByGroupName(receiver);
-			if (id == -1) {
-				id = managementGroup.getprivateGroupIdByGroupName(receiver);
-				managementGroup.getListPrivateGroup().get(id).deleteFile(filename);
-			} else {
-				managementGroup.getListPublicGroup().get(id).deleteFile(filename);
-			}
-			return true;
+			return managementGroup.deleteFile(receiver, filename);
 		}
 		return false;
 	}
@@ -213,36 +200,19 @@ public class Menu {
 	}
 
 	public String showLimitedMessageToGroup(int lastestMessage, int oldMessage, String clubname) {
-		String out = new String();
 		if (isLogin() && this.user.showAllMessageGroup(clubname)) {
-			int id = managementGroup.getPublicGroupIdByGroupName(clubname);
-			if (id == -1) {
-				id = managementGroup.getprivateGroupIdByGroupName(clubname);
-				out = managementGroup.getListPrivateGroup().get(id).showLimitedMessageGroup(lastestMessage, oldMessage,this.user.getAliasList());
-			} else {
-				out = managementGroup.getListPublicGroup().get(id).showLimitedMessageGroup(lastestMessage, oldMessage,this.user.getAliasList());
-			}
-			
-			return out;
+			return (String) managementGroup.showLimitedMessageToGroup(clubname, lastestMessage, oldMessage,
+					this.user.getAliasList());
 		}
-		return out;
+		return null;
 
 	}
 
 	public String showNextLimitedMessageToGroup(String clubname) {
-		String out = new String();
 		if (isLogin() && this.user.showAllMessageGroup(clubname)) {
-			int id = managementGroup.getPublicGroupIdByGroupName(clubname);
-			if (id == -1) {
-				id = managementGroup.getprivateGroupIdByGroupName(clubname);
-				out = managementGroup.getListPrivateGroup().get(id).showNextLimitedMessageGroup(this.user.getAliasList());
-			} else {
-				out = managementGroup.getListPublicGroup().get(id).showNextLimitedMessageGroup(this.user.getAliasList());
-			}
-			
-			return out;
+			return managementGroup.showNextLimitedMessageToGroup(clubname, this.user.getAliasList());
 		}
-		return out;
+		return null;
 
 	}
 
@@ -278,53 +248,32 @@ public class Menu {
 	}
 
 	public boolean sendMessageToGroup(String clubname, String message) {
-		int id = managementGroup.getPublicGroupIdByGroupName(clubname);
+
 		int idMessage;
 		if (isLogin() == false) {
 			return false;
 		}
-		if (id == -1) {
-			id = managementGroup.getprivateGroupIdByGroupName(clubname);
-			if (id != -1) {
-				idMessage = managementGroup.getListPrivateGroup().get(id).receiveMessageGroup(message, this.user);
-				this.user.sentMessageToGroup(clubname, message, idMessage);
-				return true;
-			}
-		} else {
-			idMessage = managementGroup.getListPublicGroup().get(id).receiveMessageGroup(message, this.user);
+		idMessage = managementGroup.sendMessageToGroup(clubname, message, this.user);
+		if (idMessage > -1) {
 			this.user.sentMessageToGroup(clubname, message, idMessage);
 			return true;
 		}
+
 		return false;
 	}
 
 	public String showAllMessageGroup(String clubname) {
-		String out = new String();
+
 		if (isLogin() && this.user.showAllMessageGroup(clubname)) {
-			int id = managementGroup.getPublicGroupIdByGroupName(clubname);
-			if (id == -1) {
-				id = managementGroup.getprivateGroupIdByGroupName(clubname);
-				out = managementGroup.getListPrivateGroup().get(id).showAllMessageGroup(this.user.getAliasList());
-			} else {
-				out = managementGroup.getListPublicGroup().get(id).showAllMessageGroup(this.user.getAliasList());
-			}
-			
-			return out;
+			return managementGroup.showAllMessageGroup(clubname, this.user.getAliasList());
 		}
-		return out;
+		return null;
 	}
 
 	public boolean deleteMessageGroup(String clubname, int idMessage) {
-		String out = null;
-		if (isLogin() && this.user.deleteMessageGroup(clubname, idMessage)) {
-			int id = managementGroup.getPublicGroupIdByGroupName(clubname);
-			if (id == -1) {
-				id = managementGroup.getprivateGroupIdByGroupName(clubname);
-				return managementGroup.getListPrivateGroup().get(id).deleteMessageGroup(idMessage);
-			} else {
-				return managementGroup.getListPublicGroup().get(id).deleteMessageGroup(idMessage);
-			}
 
+		if (isLogin() && this.user.deleteMessageGroup(clubname, idMessage)) {
+			return managementGroup.deleteMessageGroup(clubname, idMessage);
 		}
 		return false;
 	}
