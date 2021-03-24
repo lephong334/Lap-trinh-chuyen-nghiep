@@ -25,6 +25,7 @@ public class User {
 	private HashMap<String, String> listFileHasSent;
 	private List<String> listFileHasReceive;
 	private HashMap<String, int[]> showLimitedMessage;
+	private HashMap<String, String> aliasList;
 
 	public User(String id, String lastName, String firstName, String password, String gender, String dateOfBirth,
 			String userName) {
@@ -44,6 +45,20 @@ public class User {
 		this.listFileHasSent = new HashMap<>();
 		this.listFileHasReceive = new ArrayList<String>();
 		this.showLimitedMessage = new HashMap<String, int[]>();
+		this.aliasList = new HashMap<String, String>();
+	}
+
+	public void setAlias(String username, String alias) {
+		this.aliasList.put(username, alias);
+	}
+
+	private String changeUsernameToAlias(String content) {
+		int index = content.indexOf(" ");
+		String firstWord = content.substring(0, index - 1);
+		if (this.aliasList.get(firstWord) != null) {
+			return this.aliasList.get(firstWord) + ":" + content.substring(index);
+		}
+		return content;
 	}
 
 	public Integer leaveThePublicGroup(String clubname) {
@@ -69,8 +84,9 @@ public class User {
 		String out = new String();
 		int limitLoop = lastestMessage < temporaryList.size() ? lastestMessage : temporaryList.size();
 		for (int i = 0; i < limitLoop; i++) {
-			out += temporaryList.get(i) + "\n";
+			out += changeUsernameToAlias(temporaryList.get(i)) + "\n";
 		}
+		
 		return out;
 
 	}
@@ -85,9 +101,10 @@ public class User {
 			String out = new String();
 			int limitLoop = temporaryInteger[1] < temporaryList.size() ? temporaryInteger[1] : temporaryList.size();
 			for (int i = temporaryInteger[0]; i < limitLoop; i++) {
-				out += temporaryList.get(i) + "\n";
+				out +=  changeUsernameToAlias(temporaryList.get(i)) + "\n";
 			}
 			showLimitedMessage.put(username, temporaryInteger);
+			
 			return out;
 
 		}
@@ -246,7 +263,7 @@ public class User {
 		if (temporary != null) {
 			String out = new String();
 			for (int i = 0; i < temporary.size(); i++) {
-				out += temporary.get(i) + "\n";
+				out += changeUsernameToAlias(temporary.get(i)) + "\n";
 			}
 			return out;
 		}
@@ -349,6 +366,14 @@ public class User {
 
 	public void setListPrivateGroup(HashMap<String, Integer> listPrivateGroup) {
 		this.listPrivateGroup = listPrivateGroup;
+	}
+
+	public HashMap<String, String> getAliasList() {
+		return aliasList;
+	}
+
+	public void setAliasList(HashMap<String, String> aliasList) {
+		this.aliasList = aliasList;
 	}
 
 }

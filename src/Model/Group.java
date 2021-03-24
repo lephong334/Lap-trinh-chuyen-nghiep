@@ -1,6 +1,7 @@
 package Model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
@@ -25,20 +26,33 @@ public class Group {
 		return listOfUsers.remove((user));
 	}
 
-	public String showLimitedMessageGroup(int lastestMessage, int oldMessage) {
+	private String changeUsernameToAlias(String content, HashMap<String, String> aliasList) {
+		if (aliasList.size() < 1) {
+			return content;
+		}
+		int index = content.indexOf(" ");
+		String firstWord = content.substring(0, index - 1);
+		if (aliasList.get(firstWord) != null) {
+			return aliasList.get(firstWord) + ":" + content.substring(index);
+		}
+		return content;
+	}
+
+	public String showLimitedMessageGroup(int lastestMessage, int oldMessage, HashMap<String, String> aliasList) {
 		int[] temporaryInteger = { 0, lastestMessage, oldMessage };
 		showLimitedMessage = temporaryInteger;
 
 		String out = new String();
 		int limitLoop = lastestMessage < listOfMessages.size() ? lastestMessage : listOfMessages.size();
 		for (int i = 0; i < limitLoop; i++) {
-			out += listOfMessages.get(i) + "\n";
+			out += changeUsernameToAlias(listOfMessages.get(i), aliasList) + "\n";
 		}
+
 		return out;
 
 	}
 
-	public String showNextLimitedMessageGroup() {
+	public String showNextLimitedMessageGroup(HashMap<String, String> aliasList) {
 
 		int[] temporaryInteger = showLimitedMessage;
 		temporaryInteger[0] = temporaryInteger[1];
@@ -47,7 +61,7 @@ public class Group {
 
 		int limitLoop = temporaryInteger[1] < listOfMessages.size() ? temporaryInteger[1] : listOfMessages.size();
 		for (int i = temporaryInteger[0]; i < limitLoop; i++) {
-			out += listOfMessages.get(i) + "\n";
+			out += changeUsernameToAlias(listOfMessages.get(i), aliasList) + "\n";
 		}
 
 		return out;
@@ -80,10 +94,11 @@ public class Group {
 		return listOfMessages.size() - 1;
 	}
 
-	public String showAllMessageGroup() {
+	public String showAllMessageGroup(HashMap<String, String> aliasList) {
 		String out = "";
 		for (int i = 0; i < listOfMessages.size(); i++) {
-			out += listOfMessages.get(i) + "\n";
+			out += changeUsernameToAlias(listOfMessages.get(i), aliasList) + "\n";
+			
 		}
 		return out;
 	}

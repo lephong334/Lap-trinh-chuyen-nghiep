@@ -128,6 +128,14 @@ public class Menu {
 		return false;
 	}
 
+	public boolean setAlias(String username, String alias) {
+		if (isLogin()) {
+			this.user.setAlias(username, alias);
+			return true;
+		}
+		return false;
+	}
+
 	// send file
 	public boolean sendFileToUser(String username, String address) {
 		File file = new File(address);
@@ -210,10 +218,11 @@ public class Menu {
 			int id = managementGroup.getPublicGroupIdByGroupName(clubname);
 			if (id == -1) {
 				id = managementGroup.getprivateGroupIdByGroupName(clubname);
-				out = managementGroup.getListPrivateGroup().get(id).showLimitedMessageGroup(lastestMessage, oldMessage);
+				out = managementGroup.getListPrivateGroup().get(id).showLimitedMessageGroup(lastestMessage, oldMessage,this.user.getAliasList());
 			} else {
-				out = managementGroup.getListPublicGroup().get(id).showLimitedMessageGroup(lastestMessage, oldMessage);
+				out = managementGroup.getListPublicGroup().get(id).showLimitedMessageGroup(lastestMessage, oldMessage,this.user.getAliasList());
 			}
+			
 			return out;
 		}
 		return out;
@@ -226,10 +235,11 @@ public class Menu {
 			int id = managementGroup.getPublicGroupIdByGroupName(clubname);
 			if (id == -1) {
 				id = managementGroup.getprivateGroupIdByGroupName(clubname);
-				out = managementGroup.getListPrivateGroup().get(id).showNextLimitedMessageGroup();
+				out = managementGroup.getListPrivateGroup().get(id).showNextLimitedMessageGroup(this.user.getAliasList());
 			} else {
-				out = managementGroup.getListPublicGroup().get(id).showNextLimitedMessageGroup();
+				out = managementGroup.getListPublicGroup().get(id).showNextLimitedMessageGroup(this.user.getAliasList());
 			}
+			
 			return out;
 		}
 		return out;
@@ -294,10 +304,11 @@ public class Menu {
 			int id = managementGroup.getPublicGroupIdByGroupName(clubname);
 			if (id == -1) {
 				id = managementGroup.getprivateGroupIdByGroupName(clubname);
-				out = managementGroup.getListPrivateGroup().get(id).showAllMessageGroup();
+				out = managementGroup.getListPrivateGroup().get(id).showAllMessageGroup(this.user.getAliasList());
 			} else {
-				out = managementGroup.getListPublicGroup().get(id).showAllMessageGroup();
+				out = managementGroup.getListPublicGroup().get(id).showAllMessageGroup(this.user.getAliasList());
 			}
+			
 			return out;
 		}
 		return out;

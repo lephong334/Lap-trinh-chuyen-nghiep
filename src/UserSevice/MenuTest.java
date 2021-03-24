@@ -383,4 +383,54 @@ class MenuTest {
 		assertEquals("", leaveTheGroup);
 		assertEquals("banana: the winter is comming\nbanana: the summer is comming\n", otherMember);
 	}
+
+	@Test
+	void setAlias() {
+		menu.addAccount("lastname", "first", "123", "no", "2021", "banana");
+		menu.addAccount("lastname", "first", "123", "no", "2021", "nonono");
+		menu.login("banana", "123");
+		boolean result = menu.setAlias("nonono", "Obama");
+		assertTrue(result);
+	}
+
+	@Test
+	void setAliasAndShowMessageUser() {
+		menu.addAccount("lastname", "first", "123", "no", "2021", "banana");
+		menu.addAccount("lastname", "first", "123", "no", "2021", "nonono");
+		menu.login("banana", "123");
+		menu.sendMessageToUser("nonono", "the winter is comming");
+		menu.sendMessageToUser("nonono", "the summer is comming");
+		menu.logout();
+		menu.login("nonono", "123");
+		menu.setAlias("banana", "Obama");
+		String resultAlias = menu.showAllMessageUser("banana");
+		menu.logout();
+		menu.login("banana", "123");
+		String resultNoAlias = menu.showAllMessageUser("nonono");
+		assertEquals("Obama: the winter is comming\nObama: the summer is comming\n", resultAlias);
+		assertEquals("banana: the winter is comming\nbanana: the summer is comming\n", resultNoAlias);
+
+	}
+	@Test
+	void setAliasAndShowMessageGroup() {
+		menu.addAccount("lastname", "first", "123", "no", "2021", "banana");
+		menu.addAccount("lastname", "first", "123", "no", "2021", "nonono");
+		menu.login("banana", "123");
+		menu.createPrivateGroup("NoOne");
+		menu.inviteUserPrivateGroup("nonono", "NoOne");
+		menu.sendMessageToGroup("NoOne", "the winter is comming");
+		menu.sendMessageToGroup("NoOne", "the summer is comming");
+		menu.logout();
+		menu.login("nonono", "123");
+		menu.setAlias("banana", "Obama");
+		String resultAlias = menu.showAllMessageGroup("NoOne");
+		menu.logout();
+		menu.login("banana", "123");
+		String resultNoAlias = menu.showAllMessageGroup("NoOne");
+		assertEquals("Obama: the winter is comming\nObama: the summer is comming\n", resultAlias);
+		assertEquals("banana: the winter is comming\nbanana: the summer is comming\n", resultNoAlias);
+
+	}
+
+
 }
