@@ -2,7 +2,7 @@ package Main;
 
 import java.util.HashMap;
 
-import UserSevice.Menu;
+import UI.Menu;
 
 public class Main {
 

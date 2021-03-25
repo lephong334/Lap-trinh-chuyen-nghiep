@@ -1,4 +1,4 @@
-package Model;
+package Storage;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -12,6 +12,10 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import Model.PrivateGroup;
+import Model.PublicGroup;
+import Model.User;
 
 public class DataStorge {
 
@@ -82,13 +86,7 @@ public class DataStorge {
 		}
 	}
 
-	/// Group: head
-
-///////Public group : head
-
-	/////// Public group : end
-
-	/////// Public group : end
+	
 //getter and setter for AccountList : head
 	public List<User> getListAccount() {
 		return listAccount;

@@ -1,22 +1,23 @@
-package UserSevice;
+package Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import Model.DataStorge;
 import Model.User;
+import Storage.DataStorge;
+import Storage.GroupStorage;
 
-class GroupManagerTest {
+class GroupStorageTest {
 	DataStorge dataStorge;
-	GroupManager manager;
+	GroupStorage manager;
 
 	
 	@BeforeEach
 	void setUp() throws Exception {
 		dataStorge = new DataStorge();
-		manager = new GroupManager(dataStorge);
+		manager = new GroupStorage(dataStorge);
 
 	}
 

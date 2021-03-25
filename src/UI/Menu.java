@@ -1,28 +1,30 @@
-package UserSevice;
+package UI;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import Model.DataStorge;
 import Model.Group;
 import Model.PrivateGroup;
 import Model.PublicGroup;
 import Model.User;
+import Storage.DataStorge;
+import Storage.GroupStorage;
+import Storage.UserStorage;
 
 public class Menu {
 
-	private UserManager managementUser;
-	private GroupManager managementGroup;
+	private UserStorage managementUser;
+	private GroupStorage managementGroup;
 	private DataStorge dataStorage;
 	private User user;
 
 	public Menu() {
 		user = null;
 		dataStorage = new DataStorge();
-		managementUser = new UserManager(dataStorage);
-		managementGroup = new GroupManager(dataStorage);
+		managementUser = new UserStorage(dataStorage);
+		managementGroup = new GroupStorage(dataStorage);
 
 	}
 
@@ -303,10 +305,7 @@ public class Menu {
 		return false;
 	}
 
-	public User getUser() {
-		return this.user;
-	}
-
+	
 	private boolean isLogin() {
 		if (this.user == null) {
 			return false;
@@ -314,19 +313,19 @@ public class Menu {
 		return true;
 	}
 
-	public UserManager getManagementUser() {
+	public UserStorage getManagementUser() {
 		return managementUser;
 	}
 
-	public void setManagementUser(UserManager managementUser) {
+	public void setManagementUser(UserStorage managementUser) {
 		this.managementUser = managementUser;
 	}
 
-	public GroupManager getManagementGroup() {
+	public GroupStorage getManagementGroup() {
 		return managementGroup;
 	}
 
-	public void setManagementGroup(GroupManager managermentGroup) {
+	public void setManagementGroup(GroupStorage managermentGroup) {
 		this.managementGroup = managermentGroup;
 	}
 

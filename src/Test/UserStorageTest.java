@@ -1,4 +1,4 @@
-package UserSevice;
+package Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -8,17 +8,18 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import Model.DataStorge;
 import Model.User;
+import Storage.DataStorge;
+import Storage.UserStorage;
 
-class UserManagerTest {
+class UserStorageTest {
 	DataStorge dataStorge;
-	UserManager manager;
+	UserStorage manager;
 	
 	@BeforeEach
 	void setUp() throws Exception {
 		dataStorge = new DataStorge();
-		manager = new UserManager(dataStorge);
+		manager = new UserStorage(dataStorge);
 	}
 
 	@Test
@@ -39,7 +40,7 @@ class UserManagerTest {
 	void testCheckAccount() {
 		manager.addNewAccount("0001", "last", "first", "123456", "M", "20/03", "admin1");
 		User expected;
-		expected = manager.listAccount.get(0);
+		expected = manager.getListAccount().get(0);
 		User result;
 		result = manager.checkAccount("admin1", "123456");
 		assertEquals(expected, result);
@@ -49,7 +50,7 @@ class UserManagerTest {
 	void testCheckAccountWithoutPassword() {
 		manager.addNewAccount("0001", "last", "first", "123456", "M", "20/03", "admin1");
 		User expected;
-		expected = manager.listAccount.get(0);
+		expected = manager.getListAccount().get(0);
 		User result;
 		result = manager.checkAccountWithoutPassword("admin1");
 		assertEquals(expected, result);

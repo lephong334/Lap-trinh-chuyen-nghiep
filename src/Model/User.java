@@ -86,7 +86,7 @@ public class User {
 		for (int i = 0; i < limitLoop; i++) {
 			out += changeUsernameToAlias(temporaryList.get(i)) + "\n";
 		}
-		
+
 		return out;
 
 	}
@@ -101,10 +101,10 @@ public class User {
 			String out = new String();
 			int limitLoop = temporaryInteger[1] < temporaryList.size() ? temporaryInteger[1] : temporaryList.size();
 			for (int i = temporaryInteger[0]; i < limitLoop; i++) {
-				out +=  changeUsernameToAlias(temporaryList.get(i)) + "\n";
+				out += changeUsernameToAlias(temporaryList.get(i)) + "\n";
 			}
 			showLimitedMessage.put(username, temporaryInteger);
-			
+
 			return out;
 
 		}

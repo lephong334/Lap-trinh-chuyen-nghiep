@@ -1,20 +1,19 @@
-package UserSevice;
+package Storage;
 
 import java.util.HashMap;
 import java.util.List;
 
-import Model.DataStorge;
 import Model.Group;
 import Model.PrivateGroup;
 import Model.PublicGroup;
 import Model.User;
 
-public class GroupManager {
+public class GroupStorage {
 	DataStorge dataStorge;
 	private List<PublicGroup> listPublicGroup;
 	private List<PrivateGroup> listPrivateGroup;
 
-	public GroupManager(DataStorge dataStorge) {
+	public GroupStorage(DataStorge dataStorge) {
 		this.dataStorge = dataStorge;
 		this.listPublicGroup = dataStorge.getListPublicGroup();
 		this.listPrivateGroup = dataStorge.getListPrivateGroup();

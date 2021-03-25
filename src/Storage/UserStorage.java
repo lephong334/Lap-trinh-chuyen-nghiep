@@ -1,16 +1,15 @@
-package UserSevice;
+package Storage;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import Model.DataStorge;
 import Model.User;
 
-public class UserManager {
+public class UserStorage {
 	DataStorge dataStorge;
-	protected List<User> listAccount;
+	private List<User> listAccount;
 
-	public UserManager(DataStorge dataStorge) {
+	public UserStorage(DataStorge dataStorge) {
 		this.dataStorge = dataStorge;
 		this.listAccount = dataStorge.getListAccount();
 	}
