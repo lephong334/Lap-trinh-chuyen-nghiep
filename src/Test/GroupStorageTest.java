@@ -7,17 +7,17 @@ import org.junit.jupiter.api.Test;
 
 import Model.User;
 import Storage.DataStorge;
-import Storage.GroupStorage;
+import Storage.GroupService;
 
 class GroupStorageTest {
 	DataStorge dataStorge;
-	GroupStorage manager;
+	GroupService manager;
 
 	
 	@BeforeEach
 	void setUp() throws Exception {
-		dataStorge = new DataStorge();
-		manager = new GroupStorage(dataStorge);
+		dataStorge = DataStorge.getInstance();
+		manager = new GroupService(dataStorge);
 
 	}
 

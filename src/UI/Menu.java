@@ -10,21 +10,21 @@ import Model.PrivateGroup;
 import Model.PublicGroup;
 import Model.User;
 import Storage.DataStorge;
-import Storage.GroupStorage;
-import Storage.UserStorage;
+import Storage.GroupService;
+import Storage.UserService;
 
 public class Menu {
 
-	private UserStorage managementUser;
-	private GroupStorage managementGroup;
+	private UserService managementUser;
+	private GroupService managementGroup;
 	private DataStorge dataStorage;
 	private User user;
 
 	public Menu() {
 		user = null;
-		dataStorage = new DataStorge();
-		managementUser = new UserStorage(dataStorage);
-		managementGroup = new GroupStorage(dataStorage);
+		dataStorage = DataStorge.getInstance();
+		managementUser = new UserService(dataStorage);
+		managementGroup = new GroupService(dataStorage);
 
 	}
 
@@ -305,7 +305,6 @@ public class Menu {
 		return false;
 	}
 
-	
 	private boolean isLogin() {
 		if (this.user == null) {
 			return false;
@@ -313,19 +312,19 @@ public class Menu {
 		return true;
 	}
 
-	public UserStorage getManagementUser() {
+	public UserService getManagementUser() {
 		return managementUser;
 	}
 
-	public void setManagementUser(UserStorage managementUser) {
+	public void setManagementUser(UserService managementUser) {
 		this.managementUser = managementUser;
 	}
 
-	public GroupStorage getManagementGroup() {
+	public GroupService getManagementGroup() {
 		return managementGroup;
 	}
 
-	public void setManagementGroup(GroupStorage managermentGroup) {
+	public void setManagementGroup(GroupService managermentGroup) {
 		this.managementGroup = managermentGroup;
 	}
 

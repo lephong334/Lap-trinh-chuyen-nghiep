@@ -10,16 +10,16 @@ import org.junit.jupiter.api.Test;
 
 import Model.User;
 import Storage.DataStorge;
-import Storage.UserStorage;
+import Storage.UserService;
 
 class UserStorageTest {
 	DataStorge dataStorge;
-	UserStorage manager;
+	UserService manager;
 	
 	@BeforeEach
 	void setUp() throws Exception {
-		dataStorge = new DataStorge();
-		manager = new UserStorage(dataStorge);
+		dataStorge = DataStorge.getInstance();
+		manager = new UserService(dataStorge);
 	}
 
 	@Test

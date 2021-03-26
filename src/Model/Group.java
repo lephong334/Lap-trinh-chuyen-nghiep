@@ -14,6 +14,7 @@ public class Group {
 	protected List<User> listOfUsers;
 	private int[] showLimitedMessage;
 
+	
 	public void createGroup(String name, User user) {
 		this.listOfUsers = new ArrayList<User>();
 		this.listOfMessages = new ArrayList<String>();
@@ -98,7 +99,7 @@ public class Group {
 		String out = "";
 		for (int i = 0; i < listOfMessages.size(); i++) {
 			out += changeUsernameToAlias(listOfMessages.get(i), aliasList) + "\n";
-			
+
 		}
 		return out;
 	}

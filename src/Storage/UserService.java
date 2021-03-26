@@ -5,11 +5,11 @@ import java.util.List;
 
 import Model.User;
 
-public class UserStorage {
+public class UserService {
 	DataStorge dataStorge;
 	private List<User> listAccount;
 
-	public UserStorage(DataStorge dataStorge) {
+	public UserService(DataStorge dataStorge) {
 		this.dataStorge = dataStorge;
 		this.listAccount = dataStorge.getListAccount();
 	}

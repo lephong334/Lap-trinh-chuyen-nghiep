@@ -8,12 +8,12 @@ import Model.PrivateGroup;
 import Model.PublicGroup;
 import Model.User;
 
-public class GroupStorage {
+public class GroupService {
 	DataStorge dataStorge;
 	private List<PublicGroup> listPublicGroup;
 	private List<PrivateGroup> listPrivateGroup;
 
-	public GroupStorage(DataStorge dataStorge) {
+	public GroupService(DataStorge dataStorge) {
 		this.dataStorge = dataStorge;
 		this.listPublicGroup = dataStorge.getListPublicGroup();
 		this.listPrivateGroup = dataStorge.getListPrivateGroup();

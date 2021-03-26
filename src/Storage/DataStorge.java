@@ -18,18 +18,25 @@ import Model.PublicGroup;
 import Model.User;
 
 public class DataStorge {
-
+	private static DataStorge instance;
 	private List<User> listAccount;
 	private List<PublicGroup> listPublicGroup;
 	private List<PrivateGroup> listPrivateGroup;
 	private HashMap<String, String> listFile;
 
-	public DataStorge() {
+	private DataStorge() {
 		listAccount = new ArrayList<>();
 		listPublicGroup = new ArrayList<PublicGroup>();
 		listPrivateGroup = new ArrayList<PrivateGroup>();
 		listFile = new HashMap<String, String>();
 		createFolder("D:\\all_study\\coding practice\\Test send file\\DataStore");
+	}
+
+	public static DataStorge getInstance() {
+		if (instance == null) {
+			instance = new DataStorge();
+		}
+		return instance;
 	}
 
 	public boolean copyANewFileUsingBufferedInputOutputStream(String filePathIn, String idFile, String filename) {
@@ -38,8 +45,8 @@ public class DataStorge {
 		BufferedInputStream bis = null;
 		BufferedOutputStream bos = null;
 		String temporary = "D:\\all_study\\coding practice\\Test send file\\DataStore\\" + idFile;
-		listFile.put(filename, temporary );
-		
+		listFile.put(filename, temporary);
+
 		try {
 			fis = new FileInputStream(filePathIn);
 			fos = new FileOutputStream(temporary);
@@ -86,8 +93,7 @@ public class DataStorge {
 		}
 	}
 
-	
-//getter and setter for AccountList : head
+	/// getter and setter
 	public List<User> getListAccount() {
 		return listAccount;
 	}
@@ -95,20 +101,6 @@ public class DataStorge {
 	public void setListAccount(ArrayList<User> listAccount) {
 		this.listAccount = listAccount;
 	}
-	// getter and setter for AccountList : end
-
-	/// store : head
-
-	public DataStorge readListAccountasByte() {
-		return null;
-
-	}
-
-	public boolean saveDatapasByte() {
-		return true;
-
-	}
-	/// store : end
 
 	public List<PublicGroup> getListPublicGroup() {
 		return listPublicGroup;
