@@ -1,4 +1,4 @@
-package Storage;
+package Service;
 
 import java.util.HashMap;
 import java.util.List;
@@ -7,6 +7,7 @@ import Model.Group;
 import Model.PrivateGroup;
 import Model.PublicGroup;
 import Model.User;
+import Storage.DataStorge;
 
 public class GroupService {
 	DataStorge dataStorge;
@@ -142,8 +143,7 @@ public class GroupService {
 
 	public boolean createPublicGroup(String name, User user) {
 		if (checkNameOfPublicGroup(name)) {
-			PublicGroup group = new PublicGroup();
-			group.createGroup(name, user);
+			PublicGroup group = new PublicGroup(name, user);
 			dataStorge.getListPublicGroup().add(group);
 			user.storePublicGroup(group, dataStorge.getListPublicGroup().size() - 1);
 			return true;
@@ -154,8 +154,7 @@ public class GroupService {
 
 	public boolean createPrivateGroup(String name, User user) {
 		if (checkNameOfPrivateGroup(name)) {
-			PrivateGroup group = new PrivateGroup();
-			group.createGroup(name, user);
+			PrivateGroup group = new PrivateGroup(name, user);
 			dataStorge.getListPrivateGroup().add(group);
 			user.storePrivateGroup(group, dataStorge.getListPrivateGroup().size() - 1);
 			return true;

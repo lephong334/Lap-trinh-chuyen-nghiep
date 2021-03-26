@@ -1,14 +1,15 @@
-package Storage;
+package Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import Model.User;
+import Storage.DataStorge;
 
-public class UserService {
+public class AccountService {
 	DataStorge dataStorge;
 
-	public UserService(DataStorge dataStorge) {
+	public AccountService(DataStorge dataStorge) {
 		this.dataStorge = dataStorge;
 	}
 

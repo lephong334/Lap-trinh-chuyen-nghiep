@@ -1,12 +1,18 @@
 package Model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PublicGroup extends Group {
 	private String joinCode;
 
-	public PublicGroup() {
-		this.joinCode = "";
+	public PublicGroup(String name, User user) {
+		joinCode = "";
+		listOfUsers = new ArrayList<User>();
+		listOfMessages = new ArrayList<String>();
+		listOfMedias = new ArrayList<String>();
+		this.name = name;
+	listOfUsers.add(user);
 	}
 
 	public boolean inviteUser(User user) {

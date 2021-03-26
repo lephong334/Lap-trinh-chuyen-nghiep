@@ -9,17 +9,17 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import Model.User;
+import Service.AccountService;
 import Storage.DataStorge;
-import Storage.UserService;
 
 class UserStorageTest {
 	DataStorge dataStorge;
-	UserService manager;
+	AccountService manager;
 	
 	@BeforeEach
 	void setUp() throws Exception {
 		dataStorge = DataStorge.getInstance();
-		manager = new UserService(dataStorge);
+		manager = new AccountService(dataStorge);
 	}
 
 	@Test

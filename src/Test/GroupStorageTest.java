@@ -6,8 +6,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import Model.User;
+import Service.GroupService;
 import Storage.DataStorge;
-import Storage.GroupService;
 
 class GroupStorageTest {
 	DataStorge dataStorge;

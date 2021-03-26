@@ -1,4 +1,4 @@
-package UI;
+package Service;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -10,20 +10,18 @@ import Model.PrivateGroup;
 import Model.PublicGroup;
 import Model.User;
 import Storage.DataStorge;
-import Storage.GroupService;
-import Storage.UserService;
 
-public class Menu {
+public class UserService {
 
-	private UserService managementUser;
+	private AccountService managementUser;
 	private GroupService managementGroup;
 	private DataStorge dataStorage;
 	private User user;
 
-	public Menu() {
+	public UserService() {
 		user = null;
 		dataStorage = DataStorge.getInstance();
-		managementUser = new UserService(dataStorage);
+		managementUser = new AccountService(dataStorage);
 		managementGroup = new GroupService(dataStorage);
 
 	}
@@ -312,11 +310,11 @@ public class Menu {
 		return true;
 	}
 
-	public UserService getManagementUser() {
+	public AccountService getManagementUser() {
 		return managementUser;
 	}
 
-	public void setManagementUser(UserService managementUser) {
+	public void setManagementUser(AccountService managementUser) {
 		this.managementUser = managementUser;
 	}
 

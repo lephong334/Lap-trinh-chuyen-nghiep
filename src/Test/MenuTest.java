@@ -12,14 +12,14 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import Model.User;
-import UI.Menu;
+import Service.UserService;
 
 class MenuTest {
-	Menu menu;
+	UserService menu;
 
 	@BeforeEach
 	void setUp() throws Exception {
-		menu = new Menu();
+		menu = new UserService();
 		
 	}
 

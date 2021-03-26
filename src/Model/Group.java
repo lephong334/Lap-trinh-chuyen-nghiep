@@ -6,21 +6,17 @@ import java.util.List;
 import java.util.Random;
 
 public class Group {
-	private String name;
-	private User owner;
+	protected String name;
+	protected User owner;
 
-	private List<String> listOfMessages;
-	private List<String> listOfMedias;
+	protected List<String> listOfMessages;
+	protected List<String> listOfMedias;
 	protected List<User> listOfUsers;
-	private int[] showLimitedMessage;
+	protected int[] showLimitedMessage;
 
 	
 	public void createGroup(String name, User user) {
-		this.listOfUsers = new ArrayList<User>();
-		this.listOfMessages = new ArrayList<String>();
-		this.listOfMedias = new ArrayList<String>();
-		this.name = name;
-		this.listOfUsers.add(user);
+		
 	}
 
 	public boolean leaveTheGroup(User user) {
