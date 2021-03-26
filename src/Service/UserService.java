@@ -8,7 +8,7 @@ import java.util.Scanner;
 import Model.Group;
 import Model.PrivateGroup;
 import Model.PublicGroup;
-import Model.User;
+import Model.Account;
 import Storage.DataStorge;
 
 public class UserService {
@@ -16,11 +16,11 @@ public class UserService {
 	private AccountService managementUser;
 	private GroupService managementGroup;
 	private DataStorge dataStorage;
-	private User user;
+	private Account user;
 
 	public UserService() {
 		user = null;
-		//dataStorage = DataStorge.getInstance();
+		// dataStorage = DataStorge.getInstance();
 		dataStorage = new DataStorge();
 		managementUser = new AccountService(dataStorage);
 		managementGroup = new GroupService(dataStorage);
@@ -38,9 +38,9 @@ public class UserService {
 
 	}
 
-	public User login(String username, String password) {
-		User result = managementUser.checkAccount(username, password);
-		this.user = result;
+	public Account login(String username, String password) {
+		Account result = managementUser.checkAccount(username, password);
+		user = result;
 		if (result != null) {
 			return result;
 		}
@@ -51,12 +51,12 @@ public class UserService {
 		if (isLogin()) {
 			return false;
 		}
-		this.user = null;
+		user = null;
 		return true;
 	}
 
-	public List<User> findFriendByName(String keyword) {
-		List<User> result = managementUser.findFriendByName(keyword);
+	public List<Account> findFriendByName(String keyword) {
+		List<Account> result = managementUser.findFriendByName(keyword);
 		if (result != null) {
 			return result;
 
@@ -83,7 +83,7 @@ public class UserService {
 	}
 
 	public boolean inviteUserPublicGroup(String username, String clubName) {
-		User invitingUser = managementUser.checkAccountWithoutPassword(username);
+		Account invitingUser = managementUser.checkAccountWithoutPassword(username);
 		if (isLogin() && invitingUser != null) {
 			int id = user.getPublicGroupIdByGroupName(clubName);
 			if (id > -1 && managementGroup.invitePublicGroup(id, invitingUser)) {
@@ -96,7 +96,7 @@ public class UserService {
 
 	public String generateCodeForPublicGroup(String clubName) {
 		if (isLogin()) {
-			int id = this.user.getPublicGroupIdByGroupName(clubName);
+			int id = user.getPublicGroupIdByGroupName(clubName);
 			if (id > -1) {
 				String code = managementGroup.getListPublicGroup().get(id).createJoinCode();
 				return code;
@@ -108,7 +108,7 @@ public class UserService {
 	public boolean joinPublicGroupByCode(String code, String clubName) {
 		if (isLogin()) {
 			int id = managementGroup.getPublicGroupIdByGroupName(clubName);
-			if (managementGroup.joinPublicGroupByCode(code, this.user, id)) {
+			if (managementGroup.joinPublicGroupByCode(code, user, id)) {
 				user.storePublicGroup(managementGroup.getListPublicGroup().get(id), id);
 				return true;
 			}
@@ -118,7 +118,7 @@ public class UserService {
 	}
 
 	public boolean inviteUserPrivateGroup(String username, String clubName) {
-		User invitingUser = managementUser.checkAccountWithoutPassword(username);
+		Account invitingUser = managementUser.checkAccountWithoutPassword(username);
 		if (isLogin() && invitingUser != null) {
 			int id = user.getprivateGroupIdByGroupName(clubName);
 			if (id > -1 && managementGroup.invitePrivateGroup(id, invitingUser, user)) {
@@ -131,7 +131,7 @@ public class UserService {
 
 	public boolean setAlias(String username, String alias) {
 		if (isLogin()) {
-			this.user.setAlias(username, alias);
+			user.setAlias(username, alias);
 			return true;
 		}
 		return false;
@@ -140,10 +140,10 @@ public class UserService {
 	// send file
 	public boolean sendFileToUser(String username, String address) {
 		File file = new File(address);
-		User receiver = managementUser.checkAccountWithoutPassword(username);
+		Account receiver = managementUser.checkAccountWithoutPassword(username);
 		if (isLogin() && file.exists()) {
 			String filename = file.getName();
-			String idFile = this.user.sendFile(filename, username);
+			String idFile = user.sendFile(filename, username);
 			receiver.receiveFileUser(filename);
 			dataStorage.copyANewFileUsingBufferedInputOutputStream(address, idFile, filename);
 			return true;
@@ -156,7 +156,7 @@ public class UserService {
 		File file = new File(address);
 		if (isLogin() && file.exists()) {
 			String filename = file.getName();
-			String idFile = this.user.sendFile(filename, clubname);
+			String idFile = user.sendFile(filename, clubname);
 			managementGroup.sendFileToGroup(clubname, filename);
 			dataStorage.copyANewFileUsingBufferedInputOutputStream(address, idFile, filename);
 			return true;
@@ -167,15 +167,15 @@ public class UserService {
 
 	public String showAllFileHasSent(String receiver) {
 		if (isLogin()) {
-			return this.user.showListFileHasSentToUserOrGroup(receiver);
+			return user.showListFileHasSentToUserOrGroup(receiver);
 		}
 		return null;
 	}
 
 	public boolean deleteFile(String filename) {
-		String receiver = this.user.removeFilewhichHasSent(filename);
+		String receiver = user.removeFilewhichHasSent(filename);
 		if (isLogin() && receiver != null && dataStorage.DeleteFile(filename)) {
-			User user = managementUser.checkAccountWithoutPassword(receiver);
+			Account user = managementUser.checkAccountWithoutPassword(receiver);
 			if (user != null) {
 				user.removeFileWhichHasReceive(filename);
 				return true;
@@ -188,41 +188,40 @@ public class UserService {
 //Send message
 	public boolean leaveTheGroup(String clubname) {
 		if (isLogin()) {
-			int id = this.user.leaveThePublicGroup(clubname);
+			int id = user.leaveThePublicGroup(clubname);
 			if (id != -1) {
-				return managementGroup.getListPublicGroup().get(id).leaveTheGroup(this.user);
+				return managementGroup.getListPublicGroup().get(id).leaveTheGroup(user);
 			}
-			id = this.user.leaveThePrivateGroup(clubname);
+			id = user.leaveThePrivateGroup(clubname);
 			if (id != -1) {
-				return managementGroup.getListPrivateGroup().get(id).leaveTheGroup(this.user);
+				return managementGroup.getListPrivateGroup().get(id).leaveTheGroup(user);
 			}
 		}
 		return false;
 	}
 
-	public String showLimitedMessageToGroup(int lastestMessage, int oldMessage, String clubname) {
-		if (isLogin() && this.user.showAllMessageGroup(clubname)) {
-			return (String) managementGroup.showLimitedMessageToGroup(clubname, lastestMessage, oldMessage
-					);
+	public List<String> showLimitedMessageToGroup(int lastestMessage, int oldMessage, String clubname) {
+		if (isLogin() && user.showAllMessageGroup(clubname)) {
+			return managementGroup.showLimitedMessageToGroup(clubname, lastestMessage, oldMessage);
 		}
 		return null;
 
 	}
 
-	public String showNextLimitedMessageToGroup(String clubname) {
-		if (isLogin() && this.user.showAllMessageGroup(clubname)) {
+	public List<String> showNextLimitedMessageToGroup(String clubname) {
+		if (isLogin() && user.showAllMessageGroup(clubname)) {
 			return managementGroup.showNextLimitedMessageToGroup(clubname);
 		}
 		return null;
 
 	}
 
-	public String showLimitedMessageToUser(int lastestMessage, int oldMessage, String username) {
-		return this.user.showLimitedMessageUser(lastestMessage, oldMessage, username);
+	public List<String> showLimitedMessageToUser(int lastestMessage, int oldMessage, String username) {
+		return user.showLimitedMessageUser(lastestMessage, oldMessage, username);
 	}
 
-	public String showNextLimitedMessageToUser(String username) {
-		return this.user.showNextLimitedMessageUser(username);
+	public List<String> showNextLimitedMessageToUser(String username) {
+		return user.showNextLimitedMessageUser(username);
 	}
 
 	public String findTextMessage(String keyword) {
@@ -232,15 +231,15 @@ public class UserService {
 		}
 
 		String result = new String();
-		result = this.user.findTextMessageToUser(keyword);
+		result = user.findTextMessageToUser(keyword);
 		if (result == null) {
-			List<Integer> temporary = this.user.getListPublicGroupId();
+			List<Integer> temporary = user.getListPublicGroupId();
 			for (int i = 0; i < temporary.size(); i++) {
 				result = managementGroup.getListPublicGroup().get(temporary.get(i)).findText(keyword);
 			}
 		}
 		if (result == null) {
-			List<Integer> temporary = this.user.getListPrivateGroupId();
+			List<Integer> temporary = user.getListPrivateGroupId();
 			for (int i = 0; i < temporary.size(); i++) {
 				result = managementGroup.getListPrivateGroup().get(temporary.get(i)).findText(keyword);
 			}
@@ -256,16 +255,16 @@ public class UserService {
 		}
 		idMessage = managementGroup.sendMessageToGroup(clubname, message, this.user);
 		if (idMessage > -1) {
-			this.user.sentMessageToGroup(clubname, message, idMessage);
+			user.sentMessageToGroup(clubname, message, idMessage);
 			return true;
 		}
 
 		return false;
 	}
 
-	public String showAllMessageGroup(String clubname) {
+	public List<String> showAllMessageGroup(String clubname) {
 
-		if (isLogin() && this.user.showAllMessageGroup(clubname)) {
+		if (isLogin() && user.showAllMessageGroup(clubname)) {
 			return managementGroup.showAllMessageGroup(clubname);
 		}
 		return null;
@@ -273,16 +272,16 @@ public class UserService {
 
 	public boolean deleteMessageGroup(String clubname, int idMessage) {
 
-		if (isLogin() && this.user.deleteMessageGroup(clubname, idMessage)) {
+		if (isLogin() && user.deleteMessageGroup(clubname, idMessage)) {
 			return managementGroup.deleteMessageGroup(clubname, idMessage);
 		}
 		return false;
 	}
 
 	public boolean sendMessageToUser(String username, String message) {
-		User receiver = managementUser.checkAccountWithoutPassword(username);
+		Account receiver = managementUser.checkAccountWithoutPassword(username);
 		if (isLogin()) {
-			this.user.sentMessageToUser(username, message);
+			user.sentMessageToUser(username, message);
 			receiver.receiveMessagetoUser(this.user.getUserName(), message);
 			return true;
 		}
@@ -290,13 +289,13 @@ public class UserService {
 		return false;
 	}
 
-	public String showAllMessageUser(String username) {
-		String out = this.user.showAllTheMessageUser(username);
-		return out;
+	public List<String> showAllMessageUser(String username) {
+		return user.showAllTheMessageUser(username);
+
 	}
 
 	public boolean deleteMessage(String username, int idMessage) {
-		User receiver = managementUser.checkAccountWithoutPassword(username);
+		Account receiver = managementUser.checkAccountWithoutPassword(username);
 		if (isLogin() && this.user.deleteMessageSenderInUser(username, idMessage)) {
 			receiver.deleteMessageReceiverInUser(this.user.getUserName(), idMessage);
 			return true;

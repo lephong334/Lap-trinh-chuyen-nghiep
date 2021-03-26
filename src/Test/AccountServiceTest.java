@@ -8,7 +8,7 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import Model.User;
+import Model.Account;
 import Service.AccountService;
 import Storage.DataStorge;
 
@@ -25,7 +25,7 @@ class AccountServiceTest {
 	@Test
 	void testFindFriendByName() {
 		accountService.addNewAccount("0001", "last", "first", "123456", "M", "20/03", "admin1");
-		List<User> result = new ArrayList<User>();
+		List<Account> result = new ArrayList<Account>();
 		result = accountService.findFriendByName("last");
 		assertNotNull(result);
 	}
@@ -39,9 +39,9 @@ class AccountServiceTest {
 	@Test
 	void testCheckAccount() {
 		accountService.addNewAccount("0001", "last", "first", "123456", "M", "20/03", "admin1");
-		User expected;
+		Account expected;
 		expected = accountService.getListAccount().get(0);
-		User result;
+		Account result;
 		result = accountService.checkAccount("admin1", "123456");
 		assertEquals(expected, result);
 	}
@@ -49,9 +49,9 @@ class AccountServiceTest {
 	@Test
 	void testCheckAccountWithoutPassword() {
 		accountService.addNewAccount("0001", "last", "first", "123456", "M", "20/03", "admin1");
-		User expected;
+		Account expected;
 		expected = accountService.getListAccount().get(0);
-		User result;
+		Account result;
 		result = accountService.checkAccountWithoutPassword("admin1");
 		assertEquals(expected, result);
 	}

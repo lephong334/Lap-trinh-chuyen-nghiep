@@ -15,11 +15,11 @@ import java.util.List;
 
 import Model.PrivateGroup;
 import Model.PublicGroup;
-import Model.User;
+import Model.Account;
 
 public class DataStorge {
 	private static DataStorge instance;
-	private List<User> listAccount;
+	private List<Account> listAccount;
 	private List<PublicGroup> listPublicGroup;
 	private List<PrivateGroup> listPrivateGroup;
 	private HashMap<String, String> listFile;
@@ -95,11 +95,11 @@ public class DataStorge {
 	}
 
 	/// getter and setter
-	public List<User> getListAccount() {
+	public List<Account> getListAccount() {
 		return listAccount;
 	}
 
-	public void setListAccount(ArrayList<User> listAccount) {
+	public void setListAccount(ArrayList<Account> listAccount) {
 		this.listAccount = listAccount;
 	}
 

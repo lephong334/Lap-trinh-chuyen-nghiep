@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import Model.User;
+import Model.Account;
 import Service.UserService;
 
 class UserServiceTest {
@@ -20,7 +20,7 @@ class UserServiceTest {
 	@BeforeEach
 	void setUp() throws Exception {
 		userService = new UserService();
-		
+
 	}
 
 	@ParameterizedTest(name = "lastName= {0},firstName ={1},gender= {2},dateOfBirth = {3},userName = {4}, password = {5},expected ={6}")
@@ -36,7 +36,7 @@ class UserServiceTest {
 	@CsvSource({ "banana,123,banana", "mongo,456,null" })
 	void login(String username, String password, String expected) {
 		userService.addAccount("lastname", "first", "123", "no", "2021", "banana");
-		User result = userService.login(username, password);
+		Account result = userService.login(username, password);
 		if (expected.endsWith("null")) {
 			assertNull(result);
 		} else {
@@ -50,7 +50,7 @@ class UserServiceTest {
 	void findFriend(String keyword, String expected) {
 		userService.addAccount("lastname", "first", "123", "no", "2021", "banana");
 		userService.addAccount("lastname", "second", "123", "no", "2021", "nodachi");
-		List<User> user = userService.findFriendByName(keyword);
+		List<Account> user = userService.findFriendByName(keyword);
 		if (expected.endsWith("null")) {
 			assertNull(user);
 		} else {
@@ -106,7 +106,8 @@ class UserServiceTest {
 		userService.inviteUserPublicGroup("nonono", "NoOne");
 		userService.logout();
 		userService.login("nonono", "123");
-		String result = userService.getManagementGroup().getListPublicGroup().get(0).getListOfUsers().get(1).getUserName();
+		String result = userService.getManagementGroup().getListPublicGroup().get(0).getListOfUsers().get(1)
+				.getUserName();
 		assertEquals("nonono", result);
 
 	}
@@ -121,7 +122,8 @@ class UserServiceTest {
 		userService.logout();
 		userService.login("nonono", "123");
 		userService.joinPublicGroupByCode(code, "NoOne");
-		String result = userService.getManagementGroup().getListPublicGroup().get(0).getListOfUsers().get(1).getUserName();
+		String result = userService.getManagementGroup().getListPublicGroup().get(0).getListOfUsers().get(1)
+				.getUserName();
 		assertEquals("nonono", result);
 	}
 
@@ -134,7 +136,8 @@ class UserServiceTest {
 		userService.inviteUserPrivateGroup("nonono", "NoOne");
 		userService.logout();
 		userService.login("nonono", "123");
-		String result = userService.getManagementGroup().getListPrivateGroup().get(0).getListOfUsers().get(1).getUserName();
+		String result = userService.getManagementGroup().getListPrivateGroup().get(0).getListOfUsers().get(1)
+				.getUserName();
 		assertEquals("nonono", result);
 
 	}
@@ -158,7 +161,12 @@ class UserServiceTest {
 		userService.logout();
 		userService.login("nonono", "123");
 		userService.sendMessageToUser("banana", "The summer has begun!");
-		String result = userService.showAllMessageUser("banana");
+		List<String> messages = userService.showAllMessageUser("banana");
+		String result = new String();
+		for (int i = 0; i < messages.size(); i++) {
+			result += messages.get(i) + "\n";
+		}
+
 		assertEquals("banana: the winter is comming\n" + "nonono: The summer has begun!\n", result);
 	}
 
@@ -172,7 +180,11 @@ class UserServiceTest {
 		userService.logout();
 		userService.login("nonono", "123");
 		userService.sendMessageToUser("banana", "The summer has begun!");
-		String resultShowMessage = userService.showAllMessageUser("banana");
+		List<String> messages = userService.showAllMessageUser("banana");
+		String resultShowMessage = new String();
+		for (int i = 0; i < messages.size(); i++) {
+			resultShowMessage += messages.get(i) + "\n";
+		}
 		assertTrue(resulDeleteMessage);
 		assertEquals("This message has been deleted\n" + "nonono: The summer has begun!\n", resultShowMessage);
 	}
@@ -197,7 +209,11 @@ class UserServiceTest {
 		userService.logout();
 		userService.login("nonono", "123");
 		userService.sendMessageToGroup("NoOne", "The summer has begin!");
-		String result = userService.showAllMessageGroup("NoOne");
+		List<String> messages = userService.showAllMessageGroup("NoOne");
+		String result = new String();
+		for (int i = 0; i < messages.size(); i++) {
+			result += messages.get(i) + "\n";
+		}
 		assertEquals("banana: The winter is comming\n" + "nonono: The summer has begin!\n", result);
 	}
 
@@ -213,7 +229,11 @@ class UserServiceTest {
 		userService.logout();
 		userService.login("nonono", "123");
 		userService.sendMessageToGroup("NoOne", "The summer has begin!");
-		String resultShowMessage = userService.showAllMessageGroup("NoOne");
+		List<String> messages = userService.showAllMessageGroup("NoOne");
+		String resultShowMessage = new String();
+		for (int i = 0; i < messages.size(); i++) {
+			resultShowMessage += messages.get(i) + "\n";
+		}
 		assertTrue(resulDeleteMessage);
 		assertEquals("This message has been deleted\n" + "nonono: The summer has begin!\n", resultShowMessage);
 	}
@@ -249,7 +269,8 @@ class UserServiceTest {
 		userService.addAccount("lastname", "first", "123", "no", "2021", "Obama");
 		userService.addAccount("lastname", "first", "123", "no", "2021", "noOne");
 		userService.login("banana", "123");
-		userService.sendFileToUser("nonono", "D:\\all_study\\coding practice\\Test send file\\XDSoiW2-msi-wallpaper.jpg");
+		userService.sendFileToUser("nonono",
+				"D:\\all_study\\coding practice\\Test send file\\XDSoiW2-msi-wallpaper.jpg");
 		userService.sendFileToUser("nonono", "D:\\all_study\\coding practice\\Test send file\\videoplayback.mp4");
 		userService.sendFileToUser("Obama", "D:\\all_study\\coding practice\\Test send file\\Holopsicon.mp3");
 		String resultFirstPerson = userService.showAllFileHasSent("nonono");
@@ -283,7 +304,8 @@ class UserServiceTest {
 		userService.addAccount("lastname", "first", "123", "no", "2021", "banana");
 		userService.addAccount("lastname", "first", "123", "no", "2021", "nonono");
 		userService.login("banana", "123");
-		userService.sendFileToUser("nonono", "D:\\all_study\\coding practice\\Test send file\\XDSoiW2-msi-wallpaper.jpg");
+		userService.sendFileToUser("nonono",
+				"D:\\all_study\\coding practice\\Test send file\\XDSoiW2-msi-wallpaper.jpg");
 		userService.deleteFile("XDSoiW2-msi-wallpaper.jpg");
 		String result = userService.showAllFileHasSent("nonono");
 		assertEquals("", result);
@@ -294,7 +316,8 @@ class UserServiceTest {
 		userService.addAccount("lastname", "first", "123", "no", "2021", "banana");
 		userService.login("banana", "123");
 		userService.createPublicGroup("NoOne");
-		userService.sendFileToGroup("NoOne", "D:\\all_study\\coding practice\\Test send file\\XDSoiW2-msi-wallpaper.jpg");
+		userService.sendFileToGroup("NoOne",
+				"D:\\all_study\\coding practice\\Test send file\\XDSoiW2-msi-wallpaper.jpg");
 		userService.sendFileToGroup("NoOne", "D:\\all_study\\coding practice\\Test send file\\videoplayback.mp4");
 		userService.deleteFile("XDSoiW2-msi-wallpaper.jpg");
 		String result = userService.showAllFileHasSent("NoOne");
@@ -329,9 +352,22 @@ class UserServiceTest {
 		userService.sendMessageToUser("nonono", "the winter is comming");
 		userService.sendMessageToUser("nonono", "the summer is comming");
 		userService.sendMessageToUser("nonono", "the night is comming");
-		String showMTest = userService.showLimitedMessageToUser(1, 1, "nonono");
-		String showNextKTest00 = userService.showNextLimitedMessageToUser("nonono");
-		String showNextKTest01 = userService.showNextLimitedMessageToUser("nonono");
+		List<String> message1 = userService.showLimitedMessageToUser(1, 1, "nonono");
+		List<String> message2 = userService.showNextLimitedMessageToUser("nonono");
+		List<String> message3 = userService.showNextLimitedMessageToUser("nonono");
+
+		String showMTest = new String();
+		String showNextKTest00 = new String();
+		String showNextKTest01 = new String();
+		for (int i = 0; i < message1.size(); i++) {
+			showMTest += message1.get(i) + "\n";
+		}
+		for (int i = 0; i < message2.size(); i++) {
+			showNextKTest00 += message2.get(i) + "\n";
+		}
+		for (int i = 0; i < message3.size(); i++) {
+			showNextKTest01 += message3.get(i) + "\n";
+		}
 
 		assertEquals("banana: the winter is comming\n", showMTest);
 		assertEquals("banana: the summer is comming\n", showNextKTest00);
@@ -347,10 +383,22 @@ class UserServiceTest {
 		userService.sendMessageToGroup("NoOne", "the winter is comming");
 		userService.sendMessageToGroup("NoOne", "the summer is comming");
 		userService.sendMessageToGroup("NoOne", "the night is comming");
-		String showMTest = userService.showLimitedMessageToGroup(1, 1, "NoOne");
-		String showNextKTest00 = userService.showNextLimitedMessageToGroup("NoOne");
-		String showNextKTest01 = userService.showNextLimitedMessageToGroup("NoOne");
-
+		List<String> message1 = userService.showLimitedMessageToGroup(1, 1, "NoOne");
+		List<String> message2 = userService.showNextLimitedMessageToGroup("NoOne");
+		List<String> message3 = userService.showNextLimitedMessageToGroup("NoOne");
+		String resultShowMessage = new String();
+		String showMTest = new String();
+		String showNextKTest00 = new String();
+		String showNextKTest01 = new String();
+		for (int i = 0; i < message1.size(); i++) {
+			showMTest += message1.get(i) + "\n";
+		}
+		for (int i = 0; i < message2.size(); i++) {
+			showNextKTest00 += message2.get(i) + "\n";
+		}
+		for (int i = 0; i < message3.size(); i++) {
+			showNextKTest01 += message3.get(i) + "\n";
+		}
 		assertEquals("banana: the winter is comming\n", showMTest);
 		assertEquals("banana: the summer is comming\n", showNextKTest00);
 		assertEquals("banana: the night is comming\n", showNextKTest01);
@@ -375,12 +423,20 @@ class UserServiceTest {
 		userService.inviteUserPrivateGroup("nonono", "NoOne");
 		userService.sendMessageToGroup("NoOne", "the winter is comming");
 		userService.sendMessageToGroup("NoOne", "the summer is comming");
-		String notLeaveTheGroup = userService.showAllMessageGroup("NoOne");
+		List<String> message1  = userService.showAllMessageGroup("NoOne");
 		userService.leaveTheGroup("NoOne");
-		String leaveTheGroup = userService.showAllMessageGroup("NoOne");
+		List<String> leaveTheGroup = userService.showAllMessageGroup("NoOne");
 		userService.logout();
 		userService.login("nonono", "123");
-		String otherMember = userService.showAllMessageGroup("NoOne");
+		List<String> message3  = userService.showAllMessageGroup("NoOne");
+		String notLeaveTheGroup = new String();
+		String otherMember = new String();
+		for (int i = 0; i < message1.size(); i++) {
+			notLeaveTheGroup += message1.get(i) + "\n";
+		}
+		for (int i = 0; i < message3.size(); i++) {
+			otherMember += message3.get(i) + "\n";
+		}
 		assertEquals("banana: the winter is comming\nbanana: the summer is comming\n", notLeaveTheGroup);
 		assertEquals(null, leaveTheGroup);
 		assertEquals("banana: the winter is comming\nbanana: the summer is comming\n", otherMember);
@@ -394,9 +450,5 @@ class UserServiceTest {
 		boolean result = userService.setAlias("nonono", "Obama");
 		assertTrue(result);
 	}
-
-	
-	
-
 
 }

@@ -7,7 +7,7 @@ import java.util.Map.Entry;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class User {
+public class Account {
 	private String id;
 	private String lastName;
 	private String firstName;
@@ -27,7 +27,7 @@ public class User {
 	private HashMap<String, int[]> showLimitedMessage;
 	private HashMap<String, String> aliasList;
 
-	public User(String id, String lastName, String firstName, String password, String gender, String dateOfBirth,
+	public Account(String id, String lastName, String firstName, String password, String gender, String dateOfBirth,
 			String userName) {
 		this.id = id;
 		this.lastName = lastName;
@@ -52,15 +52,6 @@ public class User {
 		this.aliasList.put(username, alias);
 	}
 
-	private String changeUsernameToAlias(String content) {
-		int index = content.indexOf(" ");
-		String firstWord = content.substring(0, index - 1);
-		if (this.aliasList.get(firstWord) != null) {
-			return this.aliasList.get(firstWord) + ":" + content.substring(index);
-		}
-		return content;
-	}
-
 	public Integer leaveThePublicGroup(String clubname) {
 		if (listPublicGroup.get(clubname) != null) {
 			return listPublicGroup.remove(clubname);
@@ -75,37 +66,38 @@ public class User {
 		return -1;
 	}
 
-	public String showLimitedMessageUser(int lastestMessage, int oldMessage, String username) {
+	public List<String> showLimitedMessageUser(int lastestMessage, int oldMessage, String username) {
 		int[] temporaryInteger = { 0, lastestMessage, oldMessage };
 		showLimitedMessage.put(username, temporaryInteger);
+		List<String> list = listMessageUser.get(username);
+		List<String> temporaryList = new ArrayList<String>();
 
-		List<String> temporaryList = listMessageUser.get(username);
-
-		String out = new String();
-		int limitLoop = lastestMessage < temporaryList.size() ? lastestMessage : temporaryList.size();
+		
+		int limitLoop = lastestMessage < list.size() ? lastestMessage : list.size();
 		for (int i = 0; i < limitLoop; i++) {
-			out += changeUsernameToAlias(temporaryList.get(i)) + "\n";
+			temporaryList.add(list.get(i));
 		}
 
-		return out;
+		return temporaryList;
 
 	}
 
-	public String showNextLimitedMessageUser(String username) {
+	public List<String> showNextLimitedMessageUser(String username) {
 		if (showLimitedMessage.get(username) != null) {
 			int[] temporaryInteger = showLimitedMessage.get(username);
 			temporaryInteger[0] = temporaryInteger[1];
 			temporaryInteger[1] = temporaryInteger[1] + temporaryInteger[2];
-			List<String> temporaryList = listMessageUser.get(username);
+			List<String> list = listMessageUser.get(username);
+			List<String> temporaryList = new ArrayList<String>();
 
 			String out = new String();
-			int limitLoop = temporaryInteger[1] < temporaryList.size() ? temporaryInteger[1] : temporaryList.size();
+			int limitLoop = temporaryInteger[1] < list.size() ? temporaryInteger[1] : list.size();
 			for (int i = temporaryInteger[0]; i < limitLoop; i++) {
-				out += changeUsernameToAlias(temporaryList.get(i)) + "\n";
+				temporaryList.add(list.get(i));
 			}
 			showLimitedMessage.put(username, temporaryInteger);
 
-			return out;
+			return temporaryList;
 
 		}
 		return null;
@@ -258,16 +250,9 @@ public class User {
 		return false;
 	}
 
-	public String showAllTheMessageUser(String username) {
-		List<String> temporary = listMessageUser.get(username);
-		if (temporary != null) {
-			String out = new String();
-			for (int i = 0; i < temporary.size(); i++) {
-				out += changeUsernameToAlias(temporary.get(i)) + "\n";
-			}
-			return out;
-		}
-		return null;
+	public List<String> showAllTheMessageUser(String username) {
+		return listMessageUser.get(username);
+		
 	}
 	// group
 

@@ -6,16 +6,16 @@ import java.util.List;
 public class PublicGroup extends Group {
 	private String joinCode;
 
-	public PublicGroup(String name, User user) {
+	public PublicGroup(String name, Account user) {
 		joinCode = "";
-		listOfUsers = new ArrayList<User>();
+		listOfUsers = new ArrayList<Account>();
 		listOfMessages = new ArrayList<String>();
 		listOfMedias = new ArrayList<String>();
 		this.name = name;
 		listOfUsers.add(user);
 	}
 
-	public boolean inviteUser(User user) {
+	public boolean inviteUser(Account user) {
 		if (user != null) {
 			this.listOfUsers.add(user);
 
@@ -24,7 +24,7 @@ public class PublicGroup extends Group {
 		return false;
 	}
 
-	public boolean joinByCode(User user, String code) {
+	public boolean joinByCode(Account user, String code) {
 		if (user != null && code.equals(this.joinCode)) {
 			this.listOfUsers.add(user);
 			this.joinCode = "";

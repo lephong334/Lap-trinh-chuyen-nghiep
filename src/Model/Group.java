@@ -7,51 +7,51 @@ import java.util.Random;
 
 public class Group {
 	protected String name;
-	protected User owner;
+	protected Account owner;
 
 	protected List<String> listOfMessages;
 	protected List<String> listOfMedias;
-	protected List<User> listOfUsers;
+	protected List<Account> listOfUsers;
 	protected int[] showLimitedMessage;
 
 	
-	public void createGroup(String name, User user) {
+	public void createGroup(String name, Account user) {
 		
 	}
 
-	public boolean leaveTheGroup(User user) {
+	public boolean leaveTheGroup(Account user) {
 		return listOfUsers.remove((user));
 	}
 
 	
 
-	public String showLimitedMessageGroup(int lastestMessage, int oldMessage) {
+	public List<String> showLimitedMessageGroup(int lastestMessage, int oldMessage) {
 		int[] temporaryInteger = { 0, lastestMessage, oldMessage };
 		showLimitedMessage = temporaryInteger;
 
-		String out = new String();
+		List<String> temporary = new ArrayList<String>();
 		int limitLoop = lastestMessage < listOfMessages.size() ? lastestMessage : listOfMessages.size();
 		for (int i = 0; i < limitLoop; i++) {
-			out += listOfMessages.get(i) + "\n";
+			temporary.add(listOfMessages.get(i));
 		}
 
-		return out;
+		return temporary;
 
 	}
 
-	public String showNextLimitedMessageGroup() {
+	public List<String> showNextLimitedMessageGroup() {
 
 		int[] temporaryInteger = showLimitedMessage;
 		temporaryInteger[0] = temporaryInteger[1];
 		temporaryInteger[1] = temporaryInteger[1] + temporaryInteger[2];
-		String out = new String();
+		List<String> temporary = new ArrayList<String>();
 
 		int limitLoop = temporaryInteger[1] < listOfMessages.size() ? temporaryInteger[1] : listOfMessages.size();
 		for (int i = temporaryInteger[0]; i < limitLoop; i++) {
-			out +=listOfMessages.get(i) + "\n";
+			temporary.add(listOfMessages.get(i));
 		}
 
-		return out;
+		return temporary;
 	}
 
 	public String findText(String keyword) {
@@ -76,18 +76,13 @@ public class Group {
 		}
 	}
 
-	public int receiveMessageGroup(String message, User user) {
+	public int receiveMessageGroup(String message, Account user) {
 		listOfMessages.add(user.getUserName() + ": " + message);
 		return listOfMessages.size() - 1;
 	}
 
-	public String showAllMessageGroup() {
-		String out = "";
-		for (int i = 0; i < listOfMessages.size(); i++) {
-			out += listOfMessages.get(i) + "\n";
-
-		}
-		return out;
+	public List<String> showAllMessageGroup() {
+		return listOfMessages;
 	}
 
 	public boolean deleteMessageGroup(int idMessage) {
@@ -106,11 +101,11 @@ public class Group {
 		this.name = name;
 	}
 
-	public User getOwner() {
+	public Account getOwner() {
 		return owner;
 	}
 
-	public void setOwner(User owner) {
+	public void setOwner(Account owner) {
 		this.owner = owner;
 	}
 
@@ -130,11 +125,11 @@ public class Group {
 		this.listOfMedias = listOfMedias;
 	}
 
-	public List<User> getListOfUsers() {
+	public List<Account> getListOfUsers() {
 		return listOfUsers;
 	}
 
-	public void setListOfUsers(List<User> listOfUsers) {
+	public void setListOfUsers(List<Account> listOfUsers) {
 		this.listOfUsers = listOfUsers;
 	}
 

@@ -3,7 +3,7 @@ package Service;
 import java.util.ArrayList;
 import java.util.List;
 
-import Model.User;
+import Model.Account;
 import Storage.DataStorge;
 
 public class AccountService {
@@ -13,8 +13,8 @@ public class AccountService {
 		this.dataStorge = dataStorge;
 	}
 
-	public List<User> findFriendByName(String keyword) {
-		List<User> result = new ArrayList<User>();
+	public List<Account> findFriendByName(String keyword) {
+		List<Account> result = new ArrayList<Account>();
 		for (int i = 0; i < dataStorge.getListAccount().size(); i++) {
 			if (dataStorge.getListAccount().get(i).getFullName().contains(keyword)) {
 				result.add(dataStorge.getListAccount().get(i));
@@ -32,12 +32,12 @@ public class AccountService {
 		if (checkUsername(userName) != -1) {
 			return false;
 		}
-		User user = new User(id, lastName, firstName, doMD5(password), gender, dateOfBirth, userName);
+		Account user = new Account(id, lastName, firstName, doMD5(password), gender, dateOfBirth, userName);
 		dataStorge.getListAccount().add(user);
 		return true;
 	}
 
-	public User checkAccount(String username, String password) {
+	public Account checkAccount(String username, String password) {
 		int id = checkUsername(username);
 		if (id > -1) {
 			if (dataStorge.getListAccount().get(id).getPassword().compareTo(doMD5(password)) == 0) {
@@ -48,7 +48,7 @@ public class AccountService {
 		return null;
 	}
 
-	public User checkAccountWithoutPassword(String username) {
+	public Account checkAccountWithoutPassword(String username) {
 		int id = checkUsername(username);
 		if (id > -1) {
 			return dataStorge.getListAccount().get(id);
@@ -79,7 +79,7 @@ public class AccountService {
 		return -1;
 	}
 
-	public List<User> getListAccount() {
+	public List<Account> getListAccount() {
 		return dataStorge.getListAccount();
 	}
 

@@ -6,7 +6,7 @@ import java.util.List;
 import Model.Group;
 import Model.PrivateGroup;
 import Model.PublicGroup;
-import Model.User;
+import Model.Account;
 import Storage.DataStorge;
 
 public class GroupService {
@@ -17,7 +17,7 @@ public class GroupService {
 
 	}
 
-	public int sendMessageToGroup(String clubname, String message, User user) {
+	public int sendMessageToGroup(String clubname, String message, Account user) {
 		int id = this.getPublicGroupIdByGroupName(clubname);
 		if (id != -1) {
 			return dataStorge.getListPublicGroup().get(id).receiveMessageGroup(message, user);
@@ -45,7 +45,7 @@ public class GroupService {
 		return false;
 	}
 
-	public String showAllMessageGroup(String clubname) {
+	public List<String> showAllMessageGroup(String clubname) {
 		int id = this.getPublicGroupIdByGroupName(clubname);
 		if (id != -1) {
 			return dataStorge.getListPublicGroup().get(id).showAllMessageGroup();
@@ -59,7 +59,7 @@ public class GroupService {
 		return null;
 	}
 
-	public String showNextLimitedMessageToGroup(String clubname) {
+	public List<String> showNextLimitedMessageToGroup(String clubname) {
 		int id = this.getPublicGroupIdByGroupName(clubname);
 		if (id != -1) {
 			return dataStorge.getListPublicGroup().get(id).showNextLimitedMessageGroup();
@@ -73,7 +73,7 @@ public class GroupService {
 		return null;
 	}
 
-	public String showLimitedMessageToGroup(String clubname, int lastestMessage, int oldMessage) {
+	public List<String> showLimitedMessageToGroup(String clubname, int lastestMessage, int oldMessage) {
 		int id = this.getPublicGroupIdByGroupName(clubname);
 		if (id != -1) {
 			return dataStorge.getListPublicGroup().get(id).showLimitedMessageGroup(lastestMessage, oldMessage);
@@ -115,21 +115,21 @@ public class GroupService {
 		return false;
 	}
 
-	public boolean invitePublicGroup(int id, User user) {
+	public boolean invitePublicGroup(int id, Account user) {
 		if (dataStorge.getListPublicGroup().get(id).inviteUser(user)) {
 			return true;
 		}
 		return false;
 	}
 
-	public boolean invitePrivateGroup(int id, User user, User member) {
+	public boolean invitePrivateGroup(int id, Account user, Account member) {
 		if (dataStorge.getListPrivateGroup().get(id).inviteUser(user, member)) {
 			return true;
 		}
 		return false;
 	}
 
-	public boolean joinPublicGroupByCode(String code, User user, int id) {
+	public boolean joinPublicGroupByCode(String code, Account user, int id) {
 
 		if (id > -1) {
 			dataStorge.getListPublicGroup().get(id).joinByCode(user, code);
@@ -138,7 +138,7 @@ public class GroupService {
 		return false;
 	}
 
-	public boolean createPublicGroup(String name, User user) {
+	public boolean createPublicGroup(String name, Account user) {
 		if (checkNameOfPublicGroup(name)) {
 			PublicGroup group = new PublicGroup(name, user);
 			dataStorge.getListPublicGroup().add(group);
@@ -149,7 +149,7 @@ public class GroupService {
 
 	}
 
-	public boolean createPrivateGroup(String name, User user) {
+	public boolean createPrivateGroup(String name, Account user) {
 		if (checkNameOfPrivateGroup(name)) {
 			PrivateGroup group = new PrivateGroup(name, user);
 			dataStorge.getListPrivateGroup().add(group);
