@@ -45,46 +45,43 @@ public class GroupService {
 		return false;
 	}
 
-	public String showAllMessageGroup(String clubname, HashMap<String, String> aliasList) {
+	public String showAllMessageGroup(String clubname) {
 		int id = this.getPublicGroupIdByGroupName(clubname);
 		if (id != -1) {
-			return dataStorge.getListPublicGroup().get(id).showAllMessageGroup(aliasList);
+			return dataStorge.getListPublicGroup().get(id).showAllMessageGroup();
 
 		}
 		id = this.getprivateGroupIdByGroupName(clubname);
 		if (id != -1) {
-			return dataStorge.getListPrivateGroup().get(id).showAllMessageGroup(aliasList);
+			return dataStorge.getListPrivateGroup().get(id).showAllMessageGroup();
 
 		}
 		return null;
 	}
 
-	public String showNextLimitedMessageToGroup(String clubname, HashMap<String, String> aliasList) {
+	public String showNextLimitedMessageToGroup(String clubname) {
 		int id = this.getPublicGroupIdByGroupName(clubname);
 		if (id != -1) {
-			return dataStorge.getListPublicGroup().get(id).showNextLimitedMessageGroup(aliasList);
+			return dataStorge.getListPublicGroup().get(id).showNextLimitedMessageGroup();
 
 		}
 		id = this.getprivateGroupIdByGroupName(clubname);
 		if (id != -1) {
-			return dataStorge.getListPrivateGroup().get(id).showNextLimitedMessageGroup(aliasList);
+			return dataStorge.getListPrivateGroup().get(id).showNextLimitedMessageGroup();
 
 		}
 		return null;
 	}
 
-	public String showLimitedMessageToGroup(String clubname, int lastestMessage, int oldMessage,
-			HashMap<String, String> aliasList) {
+	public String showLimitedMessageToGroup(String clubname, int lastestMessage, int oldMessage) {
 		int id = this.getPublicGroupIdByGroupName(clubname);
 		if (id != -1) {
-			return dataStorge.getListPublicGroup().get(id).showLimitedMessageGroup(lastestMessage, oldMessage,
-					aliasList);
+			return dataStorge.getListPublicGroup().get(id).showLimitedMessageGroup(lastestMessage, oldMessage);
 
 		}
 		id = this.getprivateGroupIdByGroupName(clubname);
 		if (id != -1) {
-			return dataStorge.getListPrivateGroup().get(id).showLimitedMessageGroup(lastestMessage, oldMessage,
-					aliasList);
+			return dataStorge.getListPrivateGroup().get(id).showLimitedMessageGroup(lastestMessage, oldMessage);
 
 		}
 		return null;

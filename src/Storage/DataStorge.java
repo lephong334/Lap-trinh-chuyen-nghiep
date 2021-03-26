@@ -24,7 +24,7 @@ public class DataStorge {
 	private List<PrivateGroup> listPrivateGroup;
 	private HashMap<String, String> listFile;
 
-	private DataStorge() {
+	public DataStorge() {
 		listAccount = new ArrayList<>();
 		listPublicGroup = new ArrayList<PublicGroup>();
 		listPrivateGroup = new ArrayList<PrivateGroup>();

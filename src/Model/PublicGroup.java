@@ -12,13 +12,13 @@ public class PublicGroup extends Group {
 		listOfMessages = new ArrayList<String>();
 		listOfMedias = new ArrayList<String>();
 		this.name = name;
-	listOfUsers.add(user);
+		listOfUsers.add(user);
 	}
 
 	public boolean inviteUser(User user) {
 		if (user != null) {
 			this.listOfUsers.add(user);
-			
+
 			return true;
 		}
 		return false;

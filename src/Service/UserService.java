@@ -20,7 +20,8 @@ public class UserService {
 
 	public UserService() {
 		user = null;
-		dataStorage = DataStorge.getInstance();
+		//dataStorage = DataStorge.getInstance();
+		dataStorage = new DataStorge();
 		managementUser = new AccountService(dataStorage);
 		managementGroup = new GroupService(dataStorage);
 
@@ -201,8 +202,8 @@ public class UserService {
 
 	public String showLimitedMessageToGroup(int lastestMessage, int oldMessage, String clubname) {
 		if (isLogin() && this.user.showAllMessageGroup(clubname)) {
-			return (String) managementGroup.showLimitedMessageToGroup(clubname, lastestMessage, oldMessage,
-					this.user.getAliasList());
+			return (String) managementGroup.showLimitedMessageToGroup(clubname, lastestMessage, oldMessage
+					);
 		}
 		return null;
 
@@ -210,7 +211,7 @@ public class UserService {
 
 	public String showNextLimitedMessageToGroup(String clubname) {
 		if (isLogin() && this.user.showAllMessageGroup(clubname)) {
-			return managementGroup.showNextLimitedMessageToGroup(clubname, this.user.getAliasList());
+			return managementGroup.showNextLimitedMessageToGroup(clubname);
 		}
 		return null;
 
@@ -265,7 +266,7 @@ public class UserService {
 	public String showAllMessageGroup(String clubname) {
 
 		if (isLogin() && this.user.showAllMessageGroup(clubname)) {
-			return managementGroup.showAllMessageGroup(clubname, this.user.getAliasList());
+			return managementGroup.showAllMessageGroup(clubname);
 		}
 		return null;
 	}
