@@ -7,18 +7,16 @@ import Model.User;
 
 public class UserService {
 	DataStorge dataStorge;
-	private List<User> listAccount;
 
 	public UserService(DataStorge dataStorge) {
 		this.dataStorge = dataStorge;
-		this.listAccount = dataStorge.getListAccount();
 	}
 
 	public List<User> findFriendByName(String keyword) {
 		List<User> result = new ArrayList<User>();
-		for (int i = 0; i < listAccount.size(); i++) {
-			if (listAccount.get(i).getFullName().contains(keyword)) {
-				result.add(listAccount.get(i));
+		for (int i = 0; i < dataStorge.getListAccount().size(); i++) {
+			if (dataStorge.getListAccount().get(i).getFullName().contains(keyword)) {
+				result.add(dataStorge.getListAccount().get(i));
 			}
 		}
 		if (result.size() < 1) {
@@ -34,15 +32,15 @@ public class UserService {
 			return false;
 		}
 		User user = new User(id, lastName, firstName, doMD5(password), gender, dateOfBirth, userName);
-		this.listAccount.add(user);
+		dataStorge.getListAccount().add(user);
 		return true;
 	}
 
 	public User checkAccount(String username, String password) {
 		int id = checkUsername(username);
 		if (id > -1) {
-			if (listAccount.get(id).getPassword().compareTo(doMD5(password)) == 0) {
-				return listAccount.get(id);
+			if (dataStorge.getListAccount().get(id).getPassword().compareTo(doMD5(password)) == 0) {
+				return dataStorge.getListAccount().get(id);
 			}
 			return null;
 		}
@@ -52,7 +50,7 @@ public class UserService {
 	public User checkAccountWithoutPassword(String username) {
 		int id = checkUsername(username);
 		if (id > -1) {
-			return listAccount.get(id);
+			return dataStorge.getListAccount().get(id);
 		}
 		return null;
 	}
@@ -72,8 +70,8 @@ public class UserService {
 	}
 
 	private int checkUsername(String username) {
-		for (int i = 0; i < listAccount.size(); i++) {
-			if (this.listAccount.get(i).getUserName().compareTo(username) == 0) {
+		for (int i = 0; i < dataStorge.getListAccount().size(); i++) {
+			if (this.dataStorge.getListAccount().get(i).getUserName().compareTo(username) == 0) {
 				return i;
 			}
 		}
@@ -81,10 +79,7 @@ public class UserService {
 	}
 
 	public List<User> getListAccount() {
-		return listAccount;
+		return dataStorge.getListAccount();
 	}
 
-	public void setListAccount(List<User> listAccount) {
-		this.listAccount = listAccount;
-	}
 }

@@ -10,24 +10,21 @@ import Model.User;
 
 public class GroupService {
 	DataStorge dataStorge;
-	private List<PublicGroup> listPublicGroup;
-	private List<PrivateGroup> listPrivateGroup;
 
 	public GroupService(DataStorge dataStorge) {
 		this.dataStorge = dataStorge;
-		this.listPublicGroup = dataStorge.getListPublicGroup();
-		this.listPrivateGroup = dataStorge.getListPrivateGroup();
+
 	}
 
 	public int sendMessageToGroup(String clubname, String message, User user) {
 		int id = this.getPublicGroupIdByGroupName(clubname);
 		if (id != -1) {
-			return this.listPublicGroup.get(id).receiveMessageGroup(message, user);
+			return dataStorge.getListPublicGroup().get(id).receiveMessageGroup(message, user);
 
 		}
 		id = this.getprivateGroupIdByGroupName(clubname);
 		if (id != -1) {
-			return this.listPrivateGroup.get(id).receiveMessageGroup(message, user);
+			return dataStorge.getListPrivateGroup().get(id).receiveMessageGroup(message, user);
 
 		}
 		return -1;
@@ -36,12 +33,12 @@ public class GroupService {
 	public boolean deleteMessageGroup(String clubname, int idMessage) {
 		int id = this.getPublicGroupIdByGroupName(clubname);
 		if (id != -1) {
-			this.listPublicGroup.get(id).deleteMessageGroup(idMessage);
+			dataStorge.getListPublicGroup().get(id).deleteMessageGroup(idMessage);
 			return true;
 		}
 		id = this.getprivateGroupIdByGroupName(clubname);
 		if (id != -1) {
-			this.listPrivateGroup.get(id).deleteMessageGroup(idMessage);
+			dataStorge.getListPrivateGroup().get(id).deleteMessageGroup(idMessage);
 			return true;
 		}
 		return false;
@@ -50,12 +47,12 @@ public class GroupService {
 	public String showAllMessageGroup(String clubname, HashMap<String, String> aliasList) {
 		int id = this.getPublicGroupIdByGroupName(clubname);
 		if (id != -1) {
-			return this.listPublicGroup.get(id).showAllMessageGroup(aliasList);
+			return dataStorge.getListPublicGroup().get(id).showAllMessageGroup(aliasList);
 
 		}
 		id = this.getprivateGroupIdByGroupName(clubname);
 		if (id != -1) {
-			return this.listPrivateGroup.get(id).showAllMessageGroup(aliasList);
+			return dataStorge.getListPrivateGroup().get(id).showAllMessageGroup(aliasList);
 
 		}
 		return null;
@@ -64,12 +61,12 @@ public class GroupService {
 	public String showNextLimitedMessageToGroup(String clubname, HashMap<String, String> aliasList) {
 		int id = this.getPublicGroupIdByGroupName(clubname);
 		if (id != -1) {
-			return this.listPublicGroup.get(id).showNextLimitedMessageGroup(aliasList);
+			return dataStorge.getListPublicGroup().get(id).showNextLimitedMessageGroup(aliasList);
 
 		}
 		id = this.getprivateGroupIdByGroupName(clubname);
 		if (id != -1) {
-			return this.listPrivateGroup.get(id).showNextLimitedMessageGroup(aliasList);
+			return dataStorge.getListPrivateGroup().get(id).showNextLimitedMessageGroup(aliasList);
 
 		}
 		return null;
@@ -79,12 +76,14 @@ public class GroupService {
 			HashMap<String, String> aliasList) {
 		int id = this.getPublicGroupIdByGroupName(clubname);
 		if (id != -1) {
-			return this.listPublicGroup.get(id).showLimitedMessageGroup(lastestMessage, oldMessage, aliasList);
+			return dataStorge.getListPublicGroup().get(id).showLimitedMessageGroup(lastestMessage, oldMessage,
+					aliasList);
 
 		}
 		id = this.getprivateGroupIdByGroupName(clubname);
 		if (id != -1) {
-			return this.listPrivateGroup.get(id).showLimitedMessageGroup(lastestMessage, oldMessage, aliasList);
+			return dataStorge.getListPrivateGroup().get(id).showLimitedMessageGroup(lastestMessage, oldMessage,
+					aliasList);
 
 		}
 		return null;
@@ -93,12 +92,12 @@ public class GroupService {
 	public boolean sendFileToGroup(String clubname, String filename) {
 		int id = this.getPublicGroupIdByGroupName(clubname);
 		if (id != -1) {
-			this.listPublicGroup.get(id).receiveFileUser(filename);
+			dataStorge.getListPublicGroup().get(id).receiveFileUser(filename);
 			return true;
 		}
 		id = this.getprivateGroupIdByGroupName(clubname);
 		if (id != -1) {
-			this.listPrivateGroup.get(id).receiveFileUser(filename);
+			dataStorge.getListPrivateGroup().get(id).receiveFileUser(filename);
 			return true;
 		}
 		return false;
@@ -107,26 +106,26 @@ public class GroupService {
 	public boolean deleteFile(String clubname, String filename) {
 		int id = this.getPublicGroupIdByGroupName(clubname);
 		if (id != -1) {
-			this.listPublicGroup.get(id).deleteFile(filename);
+			dataStorge.getListPublicGroup().get(id).deleteFile(filename);
 			return true;
 		}
 		id = this.getprivateGroupIdByGroupName(clubname);
 		if (id != -1) {
-			this.listPrivateGroup.get(id).deleteFile(filename);
+			dataStorge.getListPrivateGroup().get(id).deleteFile(filename);
 			return true;
 		}
 		return false;
 	}
 
 	public boolean invitePublicGroup(int id, User user) {
-		if (listPublicGroup.get(id).inviteUser(user)) {
+		if (dataStorge.getListPublicGroup().get(id).inviteUser(user)) {
 			return true;
 		}
 		return false;
 	}
 
 	public boolean invitePrivateGroup(int id, User user, User member) {
-		if (listPrivateGroup.get(id).inviteUser(user, member)) {
+		if (dataStorge.getListPrivateGroup().get(id).inviteUser(user, member)) {
 			return true;
 		}
 		return false;
@@ -135,7 +134,7 @@ public class GroupService {
 	public boolean joinPublicGroupByCode(String code, User user, int id) {
 
 		if (id > -1) {
-			listPublicGroup.get(id).joinByCode(user, code);
+			dataStorge.getListPublicGroup().get(id).joinByCode(user, code);
 			return true;
 		}
 		return false;
@@ -145,8 +144,8 @@ public class GroupService {
 		if (checkNameOfPublicGroup(name)) {
 			PublicGroup group = new PublicGroup();
 			group.createGroup(name, user);
-			this.listPublicGroup.add(group);
-			user.storePublicGroup(group, this.listPublicGroup.size() - 1);
+			dataStorge.getListPublicGroup().add(group);
+			user.storePublicGroup(group, dataStorge.getListPublicGroup().size() - 1);
 			return true;
 		}
 		return false;
@@ -157,8 +156,8 @@ public class GroupService {
 		if (checkNameOfPrivateGroup(name)) {
 			PrivateGroup group = new PrivateGroup();
 			group.createGroup(name, user);
-			this.listPrivateGroup.add(group);
-			user.storePrivateGroup(group, this.listPrivateGroup.size() - 1);
+			dataStorge.getListPrivateGroup().add(group);
+			user.storePrivateGroup(group, dataStorge.getListPrivateGroup().size() - 1);
 			return true;
 		}
 		return false;
@@ -166,8 +165,8 @@ public class GroupService {
 	}
 
 	private boolean checkNameOfPublicGroup(String name) {
-		for (int i = 0; i < listPublicGroup.size(); i++) {
-			if (listPublicGroup.get(i).getName().equalsIgnoreCase(name)) {
+		for (int i = 0; i < dataStorge.getListPublicGroup().size(); i++) {
+			if (dataStorge.getListPublicGroup().get(i).getName().equalsIgnoreCase(name)) {
 				return false;
 			}
 		}
@@ -175,8 +174,8 @@ public class GroupService {
 	}
 
 	private boolean checkNameOfPrivateGroup(String name) {
-		for (int i = 0; i < listPrivateGroup.size(); i++) {
-			if (listPrivateGroup.get(i).getName().equalsIgnoreCase(name)) {
+		for (int i = 0; i < dataStorge.getListPrivateGroup().size(); i++) {
+			if (dataStorge.getListPrivateGroup().get(i).getName().equalsIgnoreCase(name)) {
 				return false;
 			}
 		}
@@ -184,8 +183,8 @@ public class GroupService {
 	}
 
 	public int getPublicGroupIdByGroupName(String name) {
-		for (int i = 0; i < listPublicGroup.size(); i++) {
-			if (listPublicGroup.get(i).getName().equalsIgnoreCase(name)) {
+		for (int i = 0; i < dataStorge.getListPublicGroup().size(); i++) {
+			if (dataStorge.getListPublicGroup().get(i).getName().equalsIgnoreCase(name)) {
 				return i;
 			}
 		}
@@ -194,8 +193,8 @@ public class GroupService {
 	}
 
 	public int getprivateGroupIdByGroupName(String name) {
-		for (int i = 0; i < listPrivateGroup.size(); i++) {
-			if (listPrivateGroup.get(i).getName().equalsIgnoreCase(name)) {
+		for (int i = 0; i < dataStorge.getListPrivateGroup().size(); i++) {
+			if (dataStorge.getListPrivateGroup().get(i).getName().equalsIgnoreCase(name)) {
 				return i;
 			}
 		}
@@ -205,19 +204,11 @@ public class GroupService {
 
 	public List<PublicGroup> getListPublicGroup() {
 
-		return listPublicGroup;
-	}
-
-	public void setListPublicGroup(List<PublicGroup> listPublicGroup) {
-		this.listPublicGroup = listPublicGroup;
+		return dataStorge.getListPublicGroup();
 	}
 
 	public List<PrivateGroup> getListPrivateGroup() {
-		return listPrivateGroup;
-	}
-
-	public void setListPrivateGroup(List<PrivateGroup> listPrivateGroup) {
-		this.listPrivateGroup = listPrivateGroup;
+		return dataStorge.getListPrivateGroup();
 	}
 
 }

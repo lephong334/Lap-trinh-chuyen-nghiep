@@ -20,6 +20,7 @@ class MenuTest {
 	@BeforeEach
 	void setUp() throws Exception {
 		menu = new Menu();
+		
 	}
 
 	@ParameterizedTest(name = "lastName= {0},firstName ={1},gender= {2},dateOfBirth = {3},userName = {4}, password = {5},expected ={6}")

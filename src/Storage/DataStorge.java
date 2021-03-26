@@ -31,6 +31,7 @@ public class DataStorge {
 		listFile = new HashMap<String, String>();
 		createFolder("D:\\all_study\\coding practice\\Test send file\\DataStore");
 	}
+	
 
 	public static DataStorge getInstance() {
 		if (instance == null) {
