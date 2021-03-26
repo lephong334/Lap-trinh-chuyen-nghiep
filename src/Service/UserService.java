@@ -20,8 +20,7 @@ public class UserService {
 
 	public UserService() {
 		user = null;
-		// dataStorage = DataStorge.getInstance();
-		dataStorage = new DataStorge();
+		dataStorage = DataStorge.getInstance();
 		managementUser = new AccountService(dataStorage);
 		managementGroup = new GroupService(dataStorage);
 

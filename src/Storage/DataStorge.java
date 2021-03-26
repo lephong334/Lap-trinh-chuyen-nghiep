@@ -24,14 +24,13 @@ public class DataStorge {
 	private List<PrivateGroup> listPrivateGroup;
 	private HashMap<String, String> listFile;
 
-	public DataStorge() {
+	private DataStorge() {
 		listAccount = new ArrayList<>();
 		listPublicGroup = new ArrayList<PublicGroup>();
 		listPrivateGroup = new ArrayList<PrivateGroup>();
 		listFile = new HashMap<String, String>();
 		createFolder("D:\\all_study\\coding practice\\Test send file\\DataStore");
 	}
-	
 
 	public static DataStorge getInstance() {
 		if (instance == null) {

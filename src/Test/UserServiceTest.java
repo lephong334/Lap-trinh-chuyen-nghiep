@@ -423,12 +423,12 @@ class UserServiceTest {
 		userService.inviteUserPrivateGroup("nonono", "NoOne");
 		userService.sendMessageToGroup("NoOne", "the winter is comming");
 		userService.sendMessageToGroup("NoOne", "the summer is comming");
-		List<String> message1  = userService.showAllMessageGroup("NoOne");
+		List<String> message1 = userService.showAllMessageGroup("NoOne");
 		userService.leaveTheGroup("NoOne");
 		List<String> leaveTheGroup = userService.showAllMessageGroup("NoOne");
 		userService.logout();
 		userService.login("nonono", "123");
-		List<String> message3  = userService.showAllMessageGroup("NoOne");
+		List<String> message3 = userService.showAllMessageGroup("NoOne");
 		String notLeaveTheGroup = new String();
 		String otherMember = new String();
 		for (int i = 0; i < message1.size(); i++) {

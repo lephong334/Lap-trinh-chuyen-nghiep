@@ -72,7 +72,6 @@ public class Account {
 		List<String> list = listMessageUser.get(username);
 		List<String> temporaryList = new ArrayList<String>();
 
-		
 		int limitLoop = lastestMessage < list.size() ? lastestMessage : list.size();
 		for (int i = 0; i < limitLoop; i++) {
 			temporaryList.add(list.get(i));
@@ -252,7 +251,7 @@ public class Account {
 
 	public List<String> showAllTheMessageUser(String username) {
 		return listMessageUser.get(username);
-		
+
 	}
 	// group
 

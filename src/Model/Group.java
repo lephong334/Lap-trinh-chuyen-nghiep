@@ -14,16 +14,9 @@ public class Group {
 	protected List<Account> listOfUsers;
 	protected int[] showLimitedMessage;
 
-	
-	public void createGroup(String name, Account user) {
-		
-	}
-
 	public boolean leaveTheGroup(Account user) {
 		return listOfUsers.remove((user));
 	}
-
-	
 
 	public List<String> showLimitedMessageGroup(int lastestMessage, int oldMessage) {
 		int[] temporaryInteger = { 0, lastestMessage, oldMessage };

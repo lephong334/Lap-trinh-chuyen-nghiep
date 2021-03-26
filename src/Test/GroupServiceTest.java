@@ -13,7 +13,6 @@ class GroupServiceTest {
 	DataStorge dataStorge;
 	GroupService groupService;
 
-	
 	@BeforeEach
 	void setUp() throws Exception {
 		dataStorge = DataStorge.getInstance();
@@ -38,7 +37,7 @@ class GroupServiceTest {
 		boolean result = groupService.invitePrivateGroup(0, user1, member1);
 		assertTrue(result);
 	}
-	
+
 	@Test
 	void testJoinPublicGroupByCode() {
 		Account user1 = new Account("0001", "last", "first", "123456", "M", "20/03", "admin1");
@@ -48,22 +47,22 @@ class GroupServiceTest {
 		boolean result = groupService.joinPublicGroupByCode(code, user2, 0);
 		assertTrue(result);
 	}
-	
+
 	@Test
 	void testCreatePublicGroup() {
 		Account user1 = new Account("0001", "last", "first", "123456", "M", "20/03", "admin1");
 		boolean result = groupService.createPublicGroup("pbGroup1", user1);
 		assertTrue(result);
 	}
-	
+
 	@Test
 	void testCreatePrivateGroup() {
 		Account user1 = new Account("0001", "last", "first", "123456", "M", "20/03", "admin1");
 		boolean result = groupService.createPrivateGroup("pvGroup1", user1);
 		assertTrue(result);
 	}
-	
-	//Has public groups
+
+	// Has public groups
 	@Test
 	void testGetPublicGroupIdByGroupName1() {
 		Account user1 = new Account("0001", "last", "first", "123456", "M", "20/03", "admin1");
@@ -71,12 +70,13 @@ class GroupServiceTest {
 		int expected;
 		if (groupService.getListPublicGroup().isEmpty()) {
 			expected = -1;
-		} else expected = 0;
+		} else
+			expected = 0;
 		int result = groupService.getPublicGroupIdByName("group1");
 		assertEquals(expected, result);
 	}
-	
-	//Has no public group
+
+	// Has no public group
 	@Test
 	void testGetPublicGroupIdByGroupName2() {
 		Account user1 = new Account("0001", "last", "first", "123456", "M", "20/03", "admin1");
@@ -84,12 +84,13 @@ class GroupServiceTest {
 		int expected;
 		if (groupService.getListPublicGroup().isEmpty()) {
 			expected = -1;
-		} else expected = 0;
+		} else
+			expected = 0;
 		int result = groupService.getPublicGroupIdByName("group1");
 		assertEquals(expected, result);
 	}
-	
-	//Has private groups
+
+	// Has private groups
 	@Test
 	void testGetprivateGroupIdByGroupName1() {
 		Account user1 = new Account("0001", "last", "first", "123456", "M", "20/03", "admin1");
@@ -97,12 +98,13 @@ class GroupServiceTest {
 		int expected;
 		if (groupService.getListPrivateGroup().isEmpty()) {
 			expected = -1;
-		} else expected = 0;
+		} else
+			expected = 0;
 		int result = groupService.getprivateGroupIdByName("group1");
 		assertEquals(expected, result);
 	}
-	
-	//Has no private group
+
+	// Has no private group
 	@Test
 	void testGetprivateGroupIdByGroupName2() {
 		Account user1 = new Account("0001", "last", "first", "123456", "M", "20/03", "admin1");
@@ -110,7 +112,8 @@ class GroupServiceTest {
 		int expected;
 		if (groupService.getListPrivateGroup().isEmpty()) {
 			expected = -1;
-		} else expected = 0;
+		} else
+			expected = 0;
 		int result = groupService.getprivateGroupIdByName("group1");
 		assertEquals(expected, result);
 	}

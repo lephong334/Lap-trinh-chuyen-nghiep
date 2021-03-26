@@ -15,7 +15,7 @@ import Storage.DataStorge;
 class AccountServiceTest {
 	DataStorge dataStorge;
 	AccountService accountService;
-	
+
 	@BeforeEach
 	void setUp() throws Exception {
 		dataStorge = DataStorge.getInstance();
@@ -55,7 +55,5 @@ class AccountServiceTest {
 		result = accountService.checkAccountWithoutPassword("admin1");
 		assertEquals(expected, result);
 	}
-
-	
 
 }
