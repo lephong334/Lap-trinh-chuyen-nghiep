@@ -118,7 +118,7 @@ class UserServiceTest {
 		userService.addAccount("lastname", "first", "123", "no", "2021", "nonono");
 		userService.login("banana", "123");
 		userService.createPublicGroup("NoOne");
-		String code = userService.generateCodeForPublicGroup("NoOne");
+		String code = userService.generateCodePublicGroup("NoOne");
 		userService.logout();
 		userService.login("nonono", "123");
 		userService.joinPublicGroupByCode(code, "NoOne");
@@ -352,7 +352,7 @@ class UserServiceTest {
 		userService.sendMessageToUser("nonono", "the winter is comming");
 		userService.sendMessageToUser("nonono", "the summer is comming");
 		userService.sendMessageToUser("nonono", "the night is comming");
-		List<String> message1 = userService.showLimitedMessageToUser(1, 1, "nonono");
+		List<String> message1 = userService.showLimitedMessageUser(1, 1, "nonono");
 		List<String> message2 = userService.showNextLimitedMessageToUser("nonono");
 		List<String> message3 = userService.showNextLimitedMessageToUser("nonono");
 
@@ -383,9 +383,9 @@ class UserServiceTest {
 		userService.sendMessageToGroup("NoOne", "the winter is comming");
 		userService.sendMessageToGroup("NoOne", "the summer is comming");
 		userService.sendMessageToGroup("NoOne", "the night is comming");
-		List<String> message1 = userService.showLimitedMessageToGroup(1, 1, "NoOne");
-		List<String> message2 = userService.showNextLimitedMessageToGroup("NoOne");
-		List<String> message3 = userService.showNextLimitedMessageToGroup("NoOne");
+		List<String> message1 = userService.showLimitedMessageGroup(1, 1, "NoOne");
+		List<String> message2 = userService.showNextLimitedMessageGroup("NoOne");
+		List<String> message3 = userService.showNextLimitedMessageGroup("NoOne");
 		String resultShowMessage = new String();
 		String showMTest = new String();
 		String showNextKTest00 = new String();

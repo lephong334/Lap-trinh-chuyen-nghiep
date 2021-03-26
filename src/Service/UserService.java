@@ -94,7 +94,7 @@ public class UserService {
 		return false;
 	}
 
-	public String generateCodeForPublicGroup(String clubName) {
+	public String generateCodePublicGroup(String clubName) {
 		if (isLogin()) {
 			int id = user.getPublicGroupIdByGroupName(clubName);
 			if (id > -1) {
@@ -107,7 +107,7 @@ public class UserService {
 
 	public boolean joinPublicGroupByCode(String code, String clubName) {
 		if (isLogin()) {
-			int id = managementGroup.getPublicGroupIdByGroupName(clubName);
+			int id = managementGroup.getPublicGroupIdByName(clubName);
 			if (managementGroup.joinPublicGroupByCode(code, user, id)) {
 				user.storePublicGroup(managementGroup.getListPublicGroup().get(id), id);
 				return true;
@@ -167,17 +167,17 @@ public class UserService {
 
 	public String showAllFileHasSent(String receiver) {
 		if (isLogin()) {
-			return user.showListFileHasSentToUserOrGroup(receiver);
+			return user.showListFileHasSentUserOrGroup(receiver);
 		}
 		return null;
 	}
 
 	public boolean deleteFile(String filename) {
-		String receiver = user.removeFilewhichHasSent(filename);
+		String receiver = user.removeFileHasSent(filename);
 		if (isLogin() && receiver != null && dataStorage.DeleteFile(filename)) {
 			Account user = managementUser.checkAccountWithoutPassword(receiver);
 			if (user != null) {
-				user.removeFileWhichHasReceive(filename);
+				user.removeFileHasReceive(filename);
 				return true;
 			}
 			return managementGroup.deleteFile(receiver, filename);
@@ -200,7 +200,7 @@ public class UserService {
 		return false;
 	}
 
-	public List<String> showLimitedMessageToGroup(int lastestMessage, int oldMessage, String clubname) {
+	public List<String> showLimitedMessageGroup(int lastestMessage, int oldMessage, String clubname) {
 		if (isLogin() && user.showAllMessageGroup(clubname)) {
 			return managementGroup.showLimitedMessageToGroup(clubname, lastestMessage, oldMessage);
 		}
@@ -208,7 +208,7 @@ public class UserService {
 
 	}
 
-	public List<String> showNextLimitedMessageToGroup(String clubname) {
+	public List<String> showNextLimitedMessageGroup(String clubname) {
 		if (isLogin() && user.showAllMessageGroup(clubname)) {
 			return managementGroup.showNextLimitedMessageToGroup(clubname);
 		}
@@ -216,7 +216,7 @@ public class UserService {
 
 	}
 
-	public List<String> showLimitedMessageToUser(int lastestMessage, int oldMessage, String username) {
+	public List<String> showLimitedMessageUser(int lastestMessage, int oldMessage, String username) {
 		return user.showLimitedMessageUser(lastestMessage, oldMessage, username);
 	}
 
@@ -231,7 +231,7 @@ public class UserService {
 		}
 
 		String result = new String();
-		result = user.findTextMessageToUser(keyword);
+		result = user.findTextMessageUser(keyword);
 		if (result == null) {
 			List<Integer> temporary = user.getListPublicGroupId();
 			for (int i = 0; i < temporary.size(); i++) {
@@ -281,8 +281,8 @@ public class UserService {
 	public boolean sendMessageToUser(String username, String message) {
 		Account receiver = managementUser.checkAccountWithoutPassword(username);
 		if (isLogin()) {
-			user.sentMessageToUser(username, message);
-			receiver.receiveMessagetoUser(this.user.getUserName(), message);
+			user.sentMessageUser(username, message);
+			receiver.receiveMessageUser(this.user.getUserName(), message);
 			return true;
 		}
 

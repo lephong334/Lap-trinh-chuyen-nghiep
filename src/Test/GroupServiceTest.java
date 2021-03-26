@@ -72,7 +72,7 @@ class GroupServiceTest {
 		if (groupService.getListPublicGroup().isEmpty()) {
 			expected = -1;
 		} else expected = 0;
-		int result = groupService.getPublicGroupIdByGroupName("group1");
+		int result = groupService.getPublicGroupIdByName("group1");
 		assertEquals(expected, result);
 	}
 	
@@ -85,7 +85,7 @@ class GroupServiceTest {
 		if (groupService.getListPublicGroup().isEmpty()) {
 			expected = -1;
 		} else expected = 0;
-		int result = groupService.getPublicGroupIdByGroupName("group1");
+		int result = groupService.getPublicGroupIdByName("group1");
 		assertEquals(expected, result);
 	}
 	
@@ -98,7 +98,7 @@ class GroupServiceTest {
 		if (groupService.getListPrivateGroup().isEmpty()) {
 			expected = -1;
 		} else expected = 0;
-		int result = groupService.getprivateGroupIdByGroupName("group1");
+		int result = groupService.getprivateGroupIdByName("group1");
 		assertEquals(expected, result);
 	}
 	
@@ -111,7 +111,7 @@ class GroupServiceTest {
 		if (groupService.getListPrivateGroup().isEmpty()) {
 			expected = -1;
 		} else expected = 0;
-		int result = groupService.getprivateGroupIdByGroupName("group1");
+		int result = groupService.getprivateGroupIdByName("group1");
 		assertEquals(expected, result);
 	}
 }

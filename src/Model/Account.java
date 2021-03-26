@@ -119,7 +119,7 @@ public class Account {
 		return temporary;
 	}
 
-	public String findTextMessageToUser(String keyword) {
+	public String findTextMessageUser(String keyword) {
 		for (Entry<String, List<String>> entry : listMessageUser.entrySet()) {
 			List<String> temporary = entry.getValue();
 			for (int i = 0; i < temporary.size(); i++) {
@@ -144,7 +144,7 @@ public class Account {
 		this.listFileHasReceive.add(filename);
 	}
 
-	public String showListFileHasSentToUserOrGroup(String receiver) {
+	public String showListFileHasSentUserOrGroup(String receiver) {
 		String out = new String();
 		for (HashMap.Entry<String, String> entry : listFileHasSent.entrySet()) {
 			if (entry.getValue().endsWith(receiver)) {
@@ -154,13 +154,13 @@ public class Account {
 		return out;
 	}
 
-	public String removeFilewhichHasSent(String filename) {
+	public String removeFileHasSent(String filename) {
 		String out = this.listFileHasSent.get(filename);
 		this.listFileHasSent.remove(filename);
 		return out;
 	}
 
-	public void removeFileWhichHasReceive(String filename) {
+	public void removeFileHasReceive(String filename) {
 		for (int i = 0; i < listFileHasReceive.size(); i++) {
 			if (listFileHasReceive.get(i).endsWith(filename)) {
 				listFileHasReceive.remove(i);
@@ -202,7 +202,7 @@ public class Account {
 		return false;
 	}
 
-	public void sentMessageToUser(String username, String message) {
+	public void sentMessageUser(String username, String message) {
 		if (listMessageUser.get(username) == null) {
 			listMessageUser.put(username, new ArrayList<String>());
 			listMessageHasSentToUser.put(username, new ArrayList<Integer>());
@@ -215,7 +215,7 @@ public class Account {
 
 	}
 
-	public void receiveMessagetoUser(String username, String message) {
+	public void receiveMessageUser(String username, String message) {
 		if (listMessageUser.get(username) == null) {
 			listMessageUser.put(username, new ArrayList<String>());
 			listMessageHasSentToUser.put(username, new ArrayList<Integer>());
@@ -227,7 +227,7 @@ public class Account {
 	}
 
 	public boolean deleteMessageSenderInUser(String username, int idMessage) {
-		if (checkContainTheIdMessageUser(username, idMessage)) {
+		if (checkContainIdMessageUser(username, idMessage)) {
 			listMessageUser.get(username).set(idMessage, "This message has been deleted");
 			return true;
 
@@ -239,7 +239,7 @@ public class Account {
 		listMessageUser.get(username).set(idMessage, "This message has been deleted");
 	}
 
-	private boolean checkContainTheIdMessageUser(String username, int idMessage) {
+	private boolean checkContainIdMessageUser(String username, int idMessage) {
 		List<Integer> temporary = listMessageHasSentToUser.get(username);
 		for (int i = 0; i < temporary.size(); i++) {
 			if (temporary.get(i) == idMessage) {

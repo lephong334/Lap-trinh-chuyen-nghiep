@@ -18,12 +18,12 @@ public class GroupService {
 	}
 
 	public int sendMessageToGroup(String clubname, String message, Account user) {
-		int id = this.getPublicGroupIdByGroupName(clubname);
+		int id = this.getPublicGroupIdByName(clubname);
 		if (id != -1) {
 			return dataStorge.getListPublicGroup().get(id).receiveMessageGroup(message, user);
 
 		}
-		id = this.getprivateGroupIdByGroupName(clubname);
+		id = this.getprivateGroupIdByName(clubname);
 		if (id != -1) {
 			return dataStorge.getListPrivateGroup().get(id).receiveMessageGroup(message, user);
 
@@ -32,12 +32,12 @@ public class GroupService {
 	}
 
 	public boolean deleteMessageGroup(String clubname, int idMessage) {
-		int id = this.getPublicGroupIdByGroupName(clubname);
+		int id = this.getPublicGroupIdByName(clubname);
 		if (id != -1) {
 			dataStorge.getListPublicGroup().get(id).deleteMessageGroup(idMessage);
 			return true;
 		}
-		id = this.getprivateGroupIdByGroupName(clubname);
+		id = this.getprivateGroupIdByName(clubname);
 		if (id != -1) {
 			dataStorge.getListPrivateGroup().get(id).deleteMessageGroup(idMessage);
 			return true;
@@ -46,12 +46,12 @@ public class GroupService {
 	}
 
 	public List<String> showAllMessageGroup(String clubname) {
-		int id = this.getPublicGroupIdByGroupName(clubname);
+		int id = this.getPublicGroupIdByName(clubname);
 		if (id != -1) {
 			return dataStorge.getListPublicGroup().get(id).showAllMessageGroup();
 
 		}
-		id = this.getprivateGroupIdByGroupName(clubname);
+		id = this.getprivateGroupIdByName(clubname);
 		if (id != -1) {
 			return dataStorge.getListPrivateGroup().get(id).showAllMessageGroup();
 
@@ -60,12 +60,12 @@ public class GroupService {
 	}
 
 	public List<String> showNextLimitedMessageToGroup(String clubname) {
-		int id = this.getPublicGroupIdByGroupName(clubname);
+		int id = this.getPublicGroupIdByName(clubname);
 		if (id != -1) {
 			return dataStorge.getListPublicGroup().get(id).showNextLimitedMessageGroup();
 
 		}
-		id = this.getprivateGroupIdByGroupName(clubname);
+		id = this.getprivateGroupIdByName(clubname);
 		if (id != -1) {
 			return dataStorge.getListPrivateGroup().get(id).showNextLimitedMessageGroup();
 
@@ -74,12 +74,12 @@ public class GroupService {
 	}
 
 	public List<String> showLimitedMessageToGroup(String clubname, int lastestMessage, int oldMessage) {
-		int id = this.getPublicGroupIdByGroupName(clubname);
+		int id = this.getPublicGroupIdByName(clubname);
 		if (id != -1) {
 			return dataStorge.getListPublicGroup().get(id).showLimitedMessageGroup(lastestMessage, oldMessage);
 
 		}
-		id = this.getprivateGroupIdByGroupName(clubname);
+		id = this.getprivateGroupIdByName(clubname);
 		if (id != -1) {
 			return dataStorge.getListPrivateGroup().get(id).showLimitedMessageGroup(lastestMessage, oldMessage);
 
@@ -88,12 +88,12 @@ public class GroupService {
 	}
 
 	public boolean sendFileToGroup(String clubname, String filename) {
-		int id = this.getPublicGroupIdByGroupName(clubname);
+		int id = this.getPublicGroupIdByName(clubname);
 		if (id != -1) {
 			dataStorge.getListPublicGroup().get(id).receiveFileUser(filename);
 			return true;
 		}
-		id = this.getprivateGroupIdByGroupName(clubname);
+		id = this.getprivateGroupIdByName(clubname);
 		if (id != -1) {
 			dataStorge.getListPrivateGroup().get(id).receiveFileUser(filename);
 			return true;
@@ -102,12 +102,12 @@ public class GroupService {
 	}
 
 	public boolean deleteFile(String clubname, String filename) {
-		int id = this.getPublicGroupIdByGroupName(clubname);
+		int id = this.getPublicGroupIdByName(clubname);
 		if (id != -1) {
 			dataStorge.getListPublicGroup().get(id).deleteFile(filename);
 			return true;
 		}
-		id = this.getprivateGroupIdByGroupName(clubname);
+		id = this.getprivateGroupIdByName(clubname);
 		if (id != -1) {
 			dataStorge.getListPrivateGroup().get(id).deleteFile(filename);
 			return true;
@@ -178,7 +178,7 @@ public class GroupService {
 		return true;
 	}
 
-	public int getPublicGroupIdByGroupName(String name) {
+	public int getPublicGroupIdByName(String name) {
 		for (int i = 0; i < dataStorge.getListPublicGroup().size(); i++) {
 			if (dataStorge.getListPublicGroup().get(i).getName().equalsIgnoreCase(name)) {
 				return i;
@@ -188,7 +188,7 @@ public class GroupService {
 		return -1;
 	}
 
-	public int getprivateGroupIdByGroupName(String name) {
+	public int getprivateGroupIdByName(String name) {
 		for (int i = 0; i < dataStorge.getListPrivateGroup().size(); i++) {
 			if (dataStorge.getListPrivateGroup().get(i).getName().equalsIgnoreCase(name)) {
 				return i;
